@@ -5,5 +5,8 @@ const recoveredData = sjcl.decrypt('mypassword', encryptedData);
 console.log('recoveredData:', recoveredData);
 
 const mimibox = {
-  entries: [],
+  entries: [
+    { name: 'Facebook', username: 'lookatme137', password: 'fb-password' },
+    { name: 'Amazon', username: 'shopper923', password: 'amazon-password' }
+  ],
 };

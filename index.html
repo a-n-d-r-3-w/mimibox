@@ -19,18 +19,13 @@
 
 <button id="add-entry">Add entry</button>
 
+<button id="save">Save</button>
+
 <table id="entries"></table>
 
 <script>
-  document.getElementById("add-entry").onclick = () => {
-    mimibox.entries.push({
-      name: 'Gmail ' + Date.now(),
-      username: 'liu.anray',
-      password: 'mypassword',
-    });
 
-
-    // Update UI
+  const updateUI = () => {
     const entriesUI = document.getElementById("entries");
 
     while (entriesUI.hasChildNodes()) {
@@ -39,7 +34,7 @@
 
     for (let i = 0; i < mimibox.entries.length; i++) {
       const entry = mimibox.entries[i];
-      const { name, username, password } = entry;
+      const {name, username, password} = entry;
 
       const nameUI = document.createElement("td");
       nameUI.innerHTML = name;
@@ -57,6 +52,44 @@
 
       entriesUI.appendChild(entryUI);
     }
+  };
+
+  updateUI();
+
+  document.getElementById("add-entry").onclick = () => {
+    mimibox.entries.push({
+      name: 'Gmail ' + Date.now(),
+      username: 'myusername',
+      password: 'mypassword',
+    });
+    updateUI();
+  };
+
+  function download(data, filename, type) {
+    const file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+      window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+      const a = document.createElement("a"),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  }
+
+  document.getElementById("save").onclick = () => {
+    const entriesAsString = JSON.stringify(mimibox.entries);
+    console.log('entriesAsString', entriesAsString);
+    const encrypted = sjcl.encrypt('mypassword', entriesAsString);
+    console.log('encrypted', encrypted);
+    download(encrypted, "mimibox.dat", 'text/plain');
+
   };
 </script>
 </body>
