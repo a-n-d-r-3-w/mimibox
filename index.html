@@ -5,8 +5,59 @@
     <title>Mimibox</title>
     <script src="sjcl.js"></script>
     <script src="main.js"></script>
+    <style>
+        button {
+            margin: 1em;
+        }
+
+        td {
+            padding: 1em;
+        }
+    </style>
 </head>
 <body>
 
+<button id="add-entry">Add entry</button>
+
+<table id="entries"></table>
+
+<script>
+  document.getElementById("add-entry").onclick = () => {
+    mimibox.entries.push({
+      name: 'Gmail ' + Date.now(),
+      username: 'liu.anray',
+      password: 'mypassword',
+    });
+
+
+    // Update UI
+    const entriesUI = document.getElementById("entries");
+
+    while (entriesUI.hasChildNodes()) {
+      entriesUI.removeChild(entriesUI.firstChild);
+    }
+
+    for (let i = 0; i < mimibox.entries.length; i++) {
+      const entry = mimibox.entries[i];
+      const { name, username, password } = entry;
+
+      const nameUI = document.createElement("td");
+      nameUI.innerHTML = name;
+
+      const usernameUI = document.createElement("td");
+      usernameUI.innerHTML = username;
+
+      const passwordUI = document.createElement("td");
+      passwordUI.innerHTML = password;
+
+      const entryUI = document.createElement("tr");
+      entryUI.appendChild(nameUI);
+      entryUI.appendChild(usernameUI);
+      entryUI.appendChild(passwordUI);
+
+      entriesUI.appendChild(entryUI);
+    }
+  };
+</script>
 </body>
 </html>
