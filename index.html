@@ -140,11 +140,22 @@
 
   document.getElementById("load").onclick = () => {
     const selectedFile = document.getElementById('file').files[0];
+    if (!selectedFile) {
+      return;
+    }
+    const loadPassword = document.getElementById("load-password").value;
+    if (!loadPassword) {
+      return;
+    }
     const reader = new FileReader();
     reader.onload = event => {
       const encrypted = event.target.result;
-      const loadPassword = document.getElementById("load-password").value;
-      const decrypted = sjcl.decrypt(loadPassword, encrypted);
+      let decrypted;
+      try {
+        decrypted = sjcl.decrypt(loadPassword, encrypted);
+      } catch (error) {
+        alert('Incorrect password.');
+      }
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
       updateUI();
