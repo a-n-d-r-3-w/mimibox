@@ -17,15 +17,21 @@
 </head>
 <body>
 
+<div>
+    <label for="save-password">Save password</label>
+    <input type="password" id="save-password">
+    <button id="save">Save</button>
+</div>
+
+<div>
+    <label for="file">File to load</label>
+    <input type="file" id="file">
+    <label for="load-password">Load password</label>
+    <input type="password" id="load-password">
+    <button id="load">Load</button>
+</div>
+
 <button id="add-entry">Add entry</button>
-
-<label for="save-password">Save password</label>
-<input type="password" id="save-password">
-<button id="save">Save</button>
-
-<input type="file" id="file">
-
-<button id="load">Load</button>
 
 <table id="entries"></table>
 
@@ -82,7 +88,7 @@
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      setTimeout(function() {
+      setTimeout(function () {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       }, 0);
@@ -101,7 +107,8 @@
     const reader = new FileReader();
     reader.onload = event => {
       const encrypted = event.target.result;
-      const decrypted = sjcl.decrypt('mypassword', encrypted);
+      const loadPassword = document.getElementById("load-password").value;
+      const decrypted = sjcl.decrypt(loadPassword, encrypted);
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
       updateUI();
