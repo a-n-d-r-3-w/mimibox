@@ -34,6 +34,12 @@
 
 <fieldset>
     <legend>Add entry</legend>
+    <label for="new-entry-name">Name</label>
+    <input type="text" id="new-entry-name">
+    <label for="new-entry-username">Username</label>
+    <input type="text" id="new-entry-username">
+    <label for="new-entry-password">Password</label>
+    <input type="text" id="new-entry-password">
     <button id="add">Add</button>
 </fieldset>
 
@@ -73,12 +79,22 @@
   updateUI();
 
   document.getElementById("add").onclick = () => {
-    mimibox.entries.push({
-      name: 'Gmail ' + Date.now(),
-      username: 'myusername',
-      password: 'mypassword',
+    const name = document.getElementById("new-entry-name").value;
+    const username = document.getElementById("new-entry-username").value;
+    const password = document.getElementById("new-entry-password").value;
+    if (!name) {
+      return;
+    }
+    mimibox.entries.unshift({
+      id: Date.now(),
+      name,
+      username,
+      password,
     });
     updateUI();
+    document.getElementById("new-entry-name").value = '';
+    document.getElementById("new-entry-username").value = '';
+    document.getElementById("new-entry-password").value = '';
   };
 
   function download(data, filename, type) {
