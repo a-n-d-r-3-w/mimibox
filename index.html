@@ -21,6 +21,10 @@
 
 <button id="save">Save</button>
 
+<input type="file" id="input">
+
+<button id="load">Load</button>
+
 <table id="entries"></table>
 
 <script>
@@ -89,8 +93,20 @@
     const encrypted = sjcl.encrypt('mypassword', entriesAsString);
     console.log('encrypted', encrypted);
     download(encrypted, "mimibox.dat", 'text/plain');
-
   };
+
+  document.getElementById("load").onclick = () => {
+    const selectedFile = document.getElementById('input').files[0];
+    const reader = new FileReader();
+    reader.onload = event => {
+      const encrypted = event.target.result;
+      const decrypted = sjcl.decrypt('mypassword', encrypted);
+      const entries = JSON.parse(decrypted);
+      mimibox.entries = entries;
+      updateUI();
+    };
+    reader.readAsText(selectedFile);
+  }
 </script>
 </body>
 </html>
