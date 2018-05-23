@@ -134,6 +134,10 @@
   document.getElementById("save").onclick = () => {
     const entriesAsString = JSON.stringify(mimibox.entries);
     const savePassword = document.getElementById("save-password").value;
+    if (!savePassword) {
+      alert('Please enter a non-empty password.');
+      return;
+    }
     const encrypted = sjcl.encrypt(savePassword, entriesAsString);
     download(encrypted, "mimibox.dat", 'text/plain');
   };
