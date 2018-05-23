@@ -1,4 +1,4 @@
-# mimibox
+# Mimibox
 A purely client-side password manager
 
 # Instructions
