@@ -17,21 +17,25 @@
 </head>
 <body>
 
-<div>
-    <label for="save-password">Save password</label>
+<fieldset>
+    <legend>Save file</legend>
+    <label for="save-password">Password</label>
     <input type="password" id="save-password">
     <button id="save">Save</button>
-</div>
+</fieldset>
 
-<div>
-    <label for="file">File to load</label>
+<fieldset>
+    <legend>Open file</legend>
     <input type="file" id="file">
-    <label for="load-password">Load password</label>
+    <label for="load-password">Password</label>
     <input type="password" id="load-password">
     <button id="load">Load</button>
-</div>
+</fieldset>
 
-<button id="add-entry">Add entry</button>
+<fieldset>
+    <legend>Add entry</legend>
+    <button id="add">Add</button>
+</fieldset>
 
 <table id="entries"></table>
 
@@ -68,7 +72,7 @@
 
   updateUI();
 
-  document.getElementById("add-entry").onclick = () => {
+  document.getElementById("add").onclick = () => {
     mimibox.entries.push({
       name: 'Gmail ' + Date.now(),
       username: 'myusername',
