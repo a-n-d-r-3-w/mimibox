@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Mimibox</title>
     <script src="sjcl.js"></script>
-    <script src="main.js"></script>
     <style>
         button {
             margin: 1em;
@@ -46,6 +45,12 @@
 <table id="entries"></table>
 
 <script>
+  const mimibox = {
+    entries: [
+      { id: '1342423423423', name: 'Website #1', username: 'myusername1', password: 'mypassword1' },
+      { id: '3565634353453', name: 'Website #2', username: 'myusername2', password: 'mypassword2' }
+    ],
+  };
 
   const updateUI = () => {
     const entriesUI = document.getElementById("entries");
