@@ -19,9 +19,11 @@
 
 <button id="add-entry">Add entry</button>
 
+<label for="save-password">Save password</label>
+<input type="password" id="save-password">
 <button id="save">Save</button>
 
-<input type="file" id="input">
+<input type="file" id="file">
 
 <button id="load">Load</button>
 
@@ -89,14 +91,13 @@
 
   document.getElementById("save").onclick = () => {
     const entriesAsString = JSON.stringify(mimibox.entries);
-    console.log('entriesAsString', entriesAsString);
-    const encrypted = sjcl.encrypt('mypassword', entriesAsString);
-    console.log('encrypted', encrypted);
+    const savePassword = document.getElementById("save-password").value;
+    const encrypted = sjcl.encrypt(savePassword, entriesAsString);
     download(encrypted, "mimibox.dat", 'text/plain');
   };
 
   document.getElementById("load").onclick = () => {
-    const selectedFile = document.getElementById('input').files[0];
+    const selectedFile = document.getElementById('file').files[0];
     const reader = new FileReader();
     reader.onload = event => {
       const encrypted = event.target.result;
