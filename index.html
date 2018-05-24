@@ -84,13 +84,15 @@
         mimibox.entries = nextEntries;
         updateUI();
       };
+      const deleteButtonContainer = document.createElement("td");
+      deleteButtonContainer.appendChild(deleteButton);
 
       const entryUI = document.createElement("tr");
       entryUI.id = id;
       entryUI.appendChild(nameUI);
       entryUI.appendChild(usernameUI);
       entryUI.appendChild(passwordUI);
-      entryUI.appendChild(deleteButton);
+      entryUI.appendChild(deleteButtonContainer);
 
       entriesUI.appendChild(entryUI);
     }
