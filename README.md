@@ -1,6 +1,8 @@
 # Mimibox
 A purely client-side password manager
 
+![screenshot](screenshot.png?raw=true)
+
 # Instructions
 
 1. Download `index.html` and `sjcl.js` and save them into the same folder
