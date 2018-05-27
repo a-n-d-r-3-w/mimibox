@@ -10,30 +10,37 @@
             font-family: "Lato Light";
             src: url("Lato-Light.ttf");
         }
+
         body {
             padding: 1em 5em;
             font-family: "Lato Light", sans-serif;
         }
+
         h1 {
             text-align: center;
         }
+
         img {
             height: 48px;
         }
+
         fieldset {
             border: 1px solid gray;
             border-radius: 0.8em;
             margin: 1em 0;
             padding: 1em 1.2em 1.5em 1.2em;
         }
+
         legend {
             border: 1px solid gray;
             border-radius: 0.5em;
             padding: 0.3em 0.7em 0.5em 0.7em;
         }
+
         input {
             margin-right: 1em;
         }
+
         td {
             padding: 1em;
         }
@@ -44,6 +51,9 @@
 <h1>
     Mimibox
 </h1>
+
+This page will clear itself in <span id="timer"></span> minutes to help protect your data. Please save any changes
+before then.
 
 <fieldset>
     <legend>Save file</legend>
@@ -76,10 +86,22 @@
 <table id="entries"></table>
 
 <script>
+  const ONE_MINUTE_IN_MS = 60000;
+  let minutesBeforeClear = 60;
+  const timer = document.getElementById("timer");
+  timer.textContent = minutesBeforeClear.toString();
+  setInterval(() => {
+    minutesBeforeClear -= 1;
+    timer.textContent = minutesBeforeClear.toString();
+    if (minutesBeforeClear === 0) {
+      window.location.reload();
+    }
+  }, ONE_MINUTE_IN_MS);
+
   const mimibox = {
     entries: [
-      { id: '1342423423423', name: 'Website #1', username: 'myusername1', password: 'mypassword1' },
-      { id: '3565634353453', name: 'Website #2', username: 'myusername2', password: 'mypassword2' }
+      {id: '1342423423423', name: 'Website #1', username: 'myusername1', password: 'mypassword1'},
+      {id: '3565634353453', name: 'Website #2', username: 'myusername2', password: 'mypassword2'}
     ],
   };
 
@@ -97,16 +119,16 @@
       const {id, name, username, password} = entry;
 
       const nameUI = document.createElement("td");
-      nameUI.innerHTML = name;
+      nameUI.textContent = name;
 
       const usernameUI = document.createElement("td");
-      usernameUI.innerHTML = username;
+      usernameUI.textContent = username;
 
       const passwordUI = document.createElement("td");
-      passwordUI.innerHTML = password;
+      passwordUI.textContent = password;
 
       const deleteButton = document.createElement("button");
-      deleteButton.innerHTML = "Delete";
+      deleteButton.textContent = "Delete";
       deleteButton.onclick = () => {
         const prevEntries = mimibox.entries;
         const nextEntries = prevEntries.filter(entry => entry.id !== id);
