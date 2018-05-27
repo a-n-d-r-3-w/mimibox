@@ -203,14 +203,15 @@
     saveButton.click();
   };
 
+  const loadPasswordElement = document.getElementById("load-password");
+
   const loadButton = document.getElementById("load");
   loadButton.onclick = () => {
-    const selectedFile = document.getElementById('file').files[0];
+    const selectedFile = document.getElementById("file").files[0];
     if (!selectedFile) {
       alert('Please select a file');
       return;
     }
-    const loadPasswordElement = document.getElementById("load-password");
     const loadPassword = loadPasswordElement.value;
     if (!loadPassword) {
       alert('Please enter a password.');
@@ -232,6 +233,10 @@
       updateUI();
     };
     reader.readAsText(selectedFile);
+  };
+
+  document.getElementById("file").onchange = () => {
+    loadPasswordElement.focus();
   };
 
   document.getElementById("load-password").onkeydown = e => {
