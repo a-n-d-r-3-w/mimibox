@@ -49,6 +49,8 @@
     <legend>Save file</legend>
     <label for="save-password">Password</label>
     <input type="password" id="save-password">
+    <label for="confirm-save-password">Confirm password</label>
+    <input type="password" id="confirm-save-password">
     <button id="save">Save</button>
 </fieldset>
 
@@ -185,11 +187,16 @@
       alert('Please enter a password.');
       return;
     }
+    const confirmSavePassword = document.getElementById("confirm-save-password").value;
+    if (savePassword !== confirmSavePassword) {
+      alert('Passwords do not match.');
+      return;
+    }
     const encrypted = sjcl.encrypt(savePassword, entriesAsString);
     download(encrypted, "mimibox.dat", 'text/plain');
   };
 
-  document.getElementById("save-password").onkeydown = e => {
+  document.getElementById("confirm-save-password").onkeydown = e => {
     if (e.keyCode !== ENTER_KEY) {
       return;
     }
