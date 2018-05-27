@@ -210,7 +210,8 @@
       alert('Please select a file');
       return;
     }
-    const loadPassword = document.getElementById("load-password").value;
+    const loadPasswordElement = document.getElementById("load-password");
+    const loadPassword = loadPasswordElement.value;
     if (!loadPassword) {
       alert('Please enter a password.');
       return;
@@ -223,6 +224,8 @@
         decrypted = sjcl.decrypt(loadPassword, encrypted);
       } catch (error) {
         alert('Incorrect password.');
+        loadPasswordElement.value = '';
+        loadPasswordElement.focus();
       }
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
