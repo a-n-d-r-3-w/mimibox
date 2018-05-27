@@ -81,6 +81,8 @@
     ],
   };
 
+  const ENTER_KEY = 13;
+
   const updateUI = () => {
     const entriesUI = document.getElementById("entries");
 
@@ -125,11 +127,16 @@
 
   updateUI();
 
-  document.getElementById("add").onclick = () => {
-    const name = document.getElementById("new-entry-name").value;
-    const username = document.getElementById("new-entry-username").value;
-    const password = document.getElementById("new-entry-password").value;
+  const addButton = document.getElementById("add");
+  addButton.onclick = () => {
+    let nameElement = document.getElementById("new-entry-name");
+    const name = nameElement.value;
+    let usernameElement = document.getElementById("new-entry-username");
+    const username = usernameElement.value;
+    let passwordElement = document.getElementById("new-entry-password");
+    const password = passwordElement.value;
     if (!name) {
+      alert('Please enter a name.');
       return;
     }
     mimibox.entries.unshift({
@@ -139,9 +146,17 @@
       password,
     });
     updateUI();
-    document.getElementById("new-entry-name").value = '';
-    document.getElementById("new-entry-username").value = '';
-    document.getElementById("new-entry-password").value = '';
+    nameElement.value = '';
+    usernameElement.value = '';
+    passwordElement.value = '';
+    nameElement.focus();
+  };
+
+  document.getElementById("new-entry-password").onkeydown = e => {
+    if (e.keyCode !== ENTER_KEY) {
+      return;
+    }
+    addButton.click();
   };
 
   function download(data, filename, type) {
@@ -162,24 +177,35 @@
     }
   }
 
-  document.getElementById("save").onclick = () => {
+  const saveButton = document.getElementById("save");
+  saveButton.onclick = () => {
     const entriesAsString = JSON.stringify(mimibox.entries);
     const savePassword = document.getElementById("save-password").value;
     if (!savePassword) {
-      alert('Please enter a non-empty password.');
+      alert('Please enter a password.');
       return;
     }
     const encrypted = sjcl.encrypt(savePassword, entriesAsString);
     download(encrypted, "mimibox.dat", 'text/plain');
   };
 
-  document.getElementById("load").onclick = () => {
+  document.getElementById("save-password").onkeydown = e => {
+    if (e.keyCode !== ENTER_KEY) {
+      return;
+    }
+    saveButton.click();
+  };
+
+  const loadButton = document.getElementById("load");
+  loadButton.onclick = () => {
     const selectedFile = document.getElementById('file').files[0];
     if (!selectedFile) {
+      alert('Please select a file');
       return;
     }
     const loadPassword = document.getElementById("load-password").value;
     if (!loadPassword) {
+      alert('Please enter a password.');
       return;
     }
     const reader = new FileReader();
@@ -196,7 +222,14 @@
       updateUI();
     };
     reader.readAsText(selectedFile);
-  }
+  };
+
+  document.getElementById("load-password").onkeydown = e => {
+    if (e.keyCode !== ENTER_KEY) {
+      return;
+    }
+    loadButton.click();
+  };
 </script>
 </body>
 </html>
