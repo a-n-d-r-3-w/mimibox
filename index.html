@@ -46,7 +46,7 @@
         }
 
         tr {
-            border-bottom: 1px dotted gray;
+            border-bottom: 1px solid lightgray;
         }
 
         td {
@@ -160,11 +160,11 @@
 
   const addButton = document.getElementById("add");
   addButton.onclick = () => {
-    let nameElement = document.getElementById("new-entry-name");
+    const nameElement = document.getElementById("new-entry-name");
     const name = nameElement.value;
-    let usernameElement = document.getElementById("new-entry-username");
+    const usernameElement = document.getElementById("new-entry-username");
     const username = usernameElement.value;
-    let passwordElement = document.getElementById("new-entry-password");
+    const passwordElement = document.getElementById("new-entry-password");
     const password = passwordElement.value;
     if (!name) {
       alert('Please enter a name.');
