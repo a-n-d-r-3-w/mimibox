@@ -41,6 +41,16 @@
             margin-right: 1em;
         }
 
+        button {
+            border: 1px solid lightgray;
+            line-height: 2em;
+            padding: 0 1em;
+        }
+
+        button:hover {
+            background: lightgray
+        }
+
         table {
             border-collapse: collapse;
         }
@@ -134,6 +144,19 @@
       const passwordUI = document.createElement("td");
       passwordUI.textContent = password;
 
+      const copyPasswordButton = document.createElement("button");
+      copyPasswordButton.textContent = "Copy password";
+      copyPasswordButton.onclick = () => {
+        navigator.clipboard.writeText(password).finally(() => {
+          setTimeout(() => {
+            navigator.clipboard.writeText("");
+          }, 10000);
+        });
+      };
+
+      const copyPasswordButtonContainer = document.createElement("td");
+      copyPasswordButtonContainer.appendChild(copyPasswordButton);
+
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
       deleteButton.onclick = () => {
@@ -150,6 +173,7 @@
       entryUI.appendChild(nameUI);
       entryUI.appendChild(usernameUI);
       entryUI.appendChild(passwordUI);
+      entryUI.appendChild(copyPasswordButtonContainer);
       entryUI.appendChild(deleteButtonContainer);
 
       entriesUI.appendChild(entryUI);
