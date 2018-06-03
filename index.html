@@ -73,20 +73,20 @@
 <p>This page will reset in <span id="timer"></span> minutes to help protect your data. Please save any changes before then.</p>
 
 <fieldset>
+    <legend>Open file</legend>
+    <input type="file" id="file">
+    <label for="load-password">Password</label>
+    <input type="password" id="load-password">
+    <button id="load">Load</button>
+</fieldset>
+
+<fieldset>
     <legend>Save file</legend>
     <label for="save-password">Password</label>
     <input type="password" id="save-password">
     <label for="confirm-save-password">Confirm password</label>
     <input type="password" id="confirm-save-password">
     <button id="save">Save</button>
-</fieldset>
-
-<fieldset>
-    <legend>Open file</legend>
-    <input type="file" id="file">
-    <label for="load-password">Password</label>
-    <input type="password" id="load-password">
-    <button id="load">Load</button>
 </fieldset>
 
 <fieldset>
@@ -232,6 +232,7 @@
     }
   }
 
+  // Save
   const saveButton = document.getElementById("save");
   saveButton.onclick = () => {
     const entriesAsString = JSON.stringify(mimibox.entries);
@@ -256,6 +257,7 @@
     saveButton.click();
   };
 
+  // Load
   const loadPasswordElement = document.getElementById("load-password");
 
   const loadButton = document.getElementById("load");
@@ -288,9 +290,12 @@
     reader.readAsText(selectedFile);
   };
 
-  document.getElementById("file").onchange = () => {
+  const fileInput = document.getElementById("file");
+  fileInput.onchange = () => {
     loadPasswordElement.focus();
   };
+
+  fileInput.focus();
 
   document.getElementById("load-password").onkeydown = e => {
     if (e.keyCode !== ENTER_KEY) {
