@@ -41,23 +41,31 @@
             margin-right: 1em;
         }
 
-        button {
+        .rectangular-button {
             border: 1px solid lightgray;
             border-radius: 0.5em;
             line-height: 2em;
             padding: 0 1em;
         }
 
-        button:hover {
+        .rectangular-button:hover {
             background: lightgray
         }
 
-        .copy-button {
-            background: none;
+        .icon-button {
+            background-size: 100%;
+            width: 16px;
+            height: 16px;
             border: none;
-            color: dodgerblue;
-            padding: 0 0.5em;
             margin: 0 0.5em;
+        }
+
+        .copy-button {
+            background-image: url("copy.png");
+        }
+
+        .delete-button {
+            background-image: url("trash.png");
         }
 
         table {
@@ -89,7 +97,7 @@
     <input type="file" id="file">
     <label for="load-password">Password</label>
     <input type="password" id="load-password">
-    <button id="load">Load</button>
+    <button id="load" class="rectangular-button">Load</button>
 </fieldset>
 
 <fieldset>
@@ -98,7 +106,7 @@
     <input type="password" id="save-password">
     <label for="confirm-save-password">Confirm password</label>
     <input type="password" id="confirm-save-password">
-    <button id="save">Save</button>
+    <button id="save" class="rectangular-button">Save</button>
 </fieldset>
 
 <fieldset>
@@ -109,7 +117,7 @@
     <input type="text" id="new-entry-username">
     <label for="new-entry-password">Password</label>
     <input type="text" id="new-entry-password">
-    <button id="add">Add</button>
+    <button id="add" class="rectangular-button">Add</button>
 </fieldset>
 
 <table id="entries"></table>
@@ -153,14 +161,8 @@
       const usernameUi = document.createElement("td");
       usernameUi.textContent = username;
 
-      const passwordUiText = document.createElement("span");
-      passwordUiText.textContent = password;
-
-      const passwordUi = document.createElement("td");
-      passwordUi.appendChild(passwordUiText);
-
       const copyPasswordButton = document.createElement("button");
-      copyPasswordButton.textContent = "Copy";
+      copyPasswordButton.classList.add("icon-button");
       copyPasswordButton.classList.add("copy-button");
       copyPasswordButton.onclick = () => {
         navigator.clipboard.writeText(password).finally(() => {
@@ -170,10 +172,16 @@
         });
       };
 
+      const passwordUiText = document.createElement("span");
+      passwordUiText.textContent = password;
+
+      const passwordUi = document.createElement("td");
       passwordUi.appendChild(copyPasswordButton);
+      passwordUi.appendChild(passwordUiText);
 
       const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
+      deleteButton.classList.add("icon-button");
+      deleteButton.classList.add("delete-button");
       deleteButton.onclick = () => {
         const prevEntries = mimibox.entries;
         const nextEntries = prevEntries.filter(entry => entry.id !== id);
