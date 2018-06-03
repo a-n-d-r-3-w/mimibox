@@ -51,6 +51,14 @@
             background: lightgray
         }
 
+        .copy-button {
+            background: none;
+            border: none;
+            color: dodgerblue;
+            padding: 0 0.5em;
+            margin: 0 0.5em;
+        }
+
         table {
             border-collapse: collapse;
         }
@@ -70,7 +78,10 @@
     Mimibox
 </h1>
 
-<p>This page will reset in <span id="timer"></span> minutes to help protect your data. Please save any changes before then.</p>
+<ul>
+    <li>This page will reset in <span id="timer"></span> minutes to help protect your data. Please save any changes before then.</li>
+    <li>Passwords copied to the clipboard are cleared after 10 seconds.</li>
+</ul>
 
 <fieldset>
     <legend>Open file</legend>
@@ -124,28 +135,32 @@
 
   const ENTER_KEY = 13;
 
-  const updateUI = () => {
-    const entriesUI = document.getElementById("entries");
+  const updateUi = () => {
+    const entriesUi = document.getElementById("entries");
 
-    while (entriesUI.hasChildNodes()) {
-      entriesUI.removeChild(entriesUI.firstChild);
+    while (entriesUi.hasChildNodes()) {
+      entriesUi.removeChild(entriesUi.firstChild);
     }
 
     for (let i = 0; i < mimibox.entries.length; i++) {
       const entry = mimibox.entries[i];
       const {id, name, username, password} = entry;
 
-      const nameUI = document.createElement("td");
-      nameUI.textContent = name;
+      const nameUi = document.createElement("td");
+      nameUi.textContent = name;
 
-      const usernameUI = document.createElement("td");
-      usernameUI.textContent = username;
+      const usernameUi = document.createElement("td");
+      usernameUi.textContent = username;
 
-      const passwordUI = document.createElement("td");
-      passwordUI.textContent = password;
+      const passwordUiText = document.createElement("span");
+      passwordUiText.textContent = password;
+
+      const passwordUi = document.createElement("td");
+      passwordUi.appendChild(passwordUiText);
 
       const copyPasswordButton = document.createElement("button");
-      copyPasswordButton.textContent = "Copy password";
+      copyPasswordButton.textContent = "Copy";
+      copyPasswordButton.classList.add("copy-button");
       copyPasswordButton.onclick = () => {
         navigator.clipboard.writeText(password).finally(() => {
           setTimeout(() => {
@@ -154,8 +169,7 @@
         });
       };
 
-      const copyPasswordButtonContainer = document.createElement("td");
-      copyPasswordButtonContainer.appendChild(copyPasswordButton);
+      passwordUi.appendChild(copyPasswordButton);
 
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
@@ -163,24 +177,23 @@
         const prevEntries = mimibox.entries;
         const nextEntries = prevEntries.filter(entry => entry.id !== id);
         mimibox.entries = nextEntries;
-        updateUI();
+        updateUi();
       };
       const deleteButtonContainer = document.createElement("td");
       deleteButtonContainer.appendChild(deleteButton);
 
-      const entryUI = document.createElement("tr");
-      entryUI.id = id;
-      entryUI.appendChild(nameUI);
-      entryUI.appendChild(usernameUI);
-      entryUI.appendChild(passwordUI);
-      entryUI.appendChild(copyPasswordButtonContainer);
-      entryUI.appendChild(deleteButtonContainer);
+      const entryUi = document.createElement("tr");
+      entryUi.id = id;
+      entryUi.appendChild(nameUi);
+      entryUi.appendChild(usernameUi);
+      entryUi.appendChild(passwordUi);
+      entryUi.appendChild(deleteButtonContainer);
 
-      entriesUI.appendChild(entryUI);
+      entriesUi.appendChild(entryUi);
     }
   };
 
-  updateUI();
+  updateUi();
 
   const addButton = document.getElementById("add");
   addButton.onclick = () => {
@@ -200,7 +213,7 @@
       username,
       password,
     });
-    updateUI();
+    updateUi();
     nameElement.value = '';
     usernameElement.value = '';
     passwordElement.value = '';
@@ -285,7 +298,7 @@
       }
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
-      updateUI();
+      updateUi();
     };
     reader.readAsText(selectedFile);
   };
