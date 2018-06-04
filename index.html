@@ -88,25 +88,25 @@
 </h1>
 
 <ul>
-    <li>This page will reset in <span id="timer"></span> minutes to help protect your data. Please save any changes before then.</li>
+    <li>This page will reset in <span id="timer"></span> minutes to help protect your data. Please export any changes before then.</li>
     <li>Passwords copied to the clipboard are cleared after 10 seconds.</li>
 </ul>
 
 <fieldset>
-    <legend>Open file</legend>
+    <legend>Import passwords from file</legend>
     <input type="file" id="file">
-    <label for="load-password">Password</label>
-    <input type="password" id="load-password">
-    <button id="load" class="rectangular-button">Load</button>
+    <label for="import-password">Password</label>
+    <input type="password" id="import-password">
+    <button id="import" class="rectangular-button">Import</button>
 </fieldset>
 
 <fieldset>
-    <legend>Save file</legend>
-    <label for="save-password">Password</label>
-    <input type="password" id="save-password">
-    <label for="confirm-save-password">Confirm password</label>
-    <input type="password" id="confirm-save-password">
-    <button id="save" class="rectangular-button">Save</button>
+    <legend>Export passwords to file</legend>
+    <label for="export-password">Password</label>
+    <input type="password" id="export-password">
+    <label for="confirm-export-password">Confirm password</label>
+    <input type="password" id="confirm-export-password">
+    <button id="export" class="rectangular-button">Export</button>
 </fieldset>
 
 <fieldset>
@@ -254,43 +254,41 @@
     }
   }
 
-  // Save
-  const saveButton = document.getElementById("save");
-  saveButton.onclick = () => {
+  const exportButton = document.getElementById("export");
+  exportButton.onclick = () => {
     const entriesAsString = JSON.stringify(mimibox.entries);
-    const savePassword = document.getElementById("save-password").value;
-    if (!savePassword) {
+    const exportPassword = document.getElementById("export-password").value;
+    if (!exportPassword) {
       alert('Please enter a password.');
       return;
     }
-    const confirmSavePassword = document.getElementById("confirm-save-password").value;
-    if (savePassword !== confirmSavePassword) {
+    const confirmExportPassword = document.getElementById("confirm-export-password").value;
+    if (exportPassword !== confirmExportPassword) {
       alert('Passwords do not match.');
       return;
     }
-    const encrypted = sjcl.encrypt(savePassword, entriesAsString);
+    const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
     download(encrypted, "mimibox.dat", 'text/plain');
   };
 
-  document.getElementById("confirm-save-password").onkeydown = e => {
+  document.getElementById("confirm-export-password").onkeydown = e => {
     if (e.keyCode !== ENTER_KEY) {
       return;
     }
-    saveButton.click();
+    exportButton.click();
   };
 
-  // Load
-  const loadPasswordElement = document.getElementById("load-password");
+  const importPasswordElement = document.getElementById("import-password");
 
-  const loadButton = document.getElementById("load");
-  loadButton.onclick = () => {
+  const importButton = document.getElementById("import");
+  importButton.onclick = () => {
     const selectedFile = document.getElementById("file").files[0];
     if (!selectedFile) {
       alert('Please select a file');
       return;
     }
-    const loadPassword = loadPasswordElement.value;
-    if (!loadPassword) {
+    const importPassword = importPasswordElement.value;
+    if (!importPassword) {
       alert('Please enter a password.');
       return;
     }
@@ -299,11 +297,11 @@
       const encrypted = event.target.result;
       let decrypted;
       try {
-        decrypted = sjcl.decrypt(loadPassword, encrypted);
+        decrypted = sjcl.decrypt(importPassword, encrypted);
       } catch (error) {
         alert('Incorrect password.');
-        loadPasswordElement.value = '';
-        loadPasswordElement.focus();
+        importPasswordElement.value = '';
+        importPasswordElement.focus();
       }
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
@@ -314,16 +312,16 @@
 
   const fileInput = document.getElementById("file");
   fileInput.onchange = () => {
-    loadPasswordElement.focus();
+    importPasswordElement.focus();
   };
 
   fileInput.focus();
 
-  document.getElementById("load-password").onkeydown = e => {
+  document.getElementById("import-password").onkeydown = e => {
     if (e.keyCode !== ENTER_KEY) {
       return;
     }
-    loadButton.click();
+    importButton.click();
   };
 </script>
 </body>
