@@ -120,6 +120,8 @@
     <button id="add" class="rectangular-button">Add</button>
 </fieldset>
 
+<button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
+
 <table id="entries"></table>
 
 <script>
@@ -134,6 +136,8 @@
       window.location.reload();
     }
   }, ONE_MINUTE_IN_MS);
+
+  let showPasswords = false;
 
   const mimibox = {
     entries: [
@@ -173,7 +177,7 @@
       };
 
       const passwordUiText = document.createElement("span");
-      passwordUiText.textContent = password;
+      passwordUiText.textContent = showPasswords ? password : '················';
 
       const passwordUi = document.createElement("td");
       passwordUi.appendChild(copyPasswordButton);
@@ -323,6 +327,12 @@
     }
     importButton.click();
   };
+
+  document.getElementById("show-hide-passwords").onclick = () => {
+    showPasswords = !showPasswords;
+    updateUi();
+  };
+
 </script>
 </body>
 </html>
