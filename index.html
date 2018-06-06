@@ -187,6 +187,10 @@
       deleteButton.classList.add("icon-button");
       deleteButton.classList.add("delete-button");
       deleteButton.onclick = () => {
+        let isUserSure = confirm("Are you sure?");
+        if (!isUserSure) {
+          return;
+        }
         const prevEntries = mimibox.entries;
         const nextEntries = prevEntries.filter(entry => entry.id !== id);
         mimibox.entries = nextEntries;
