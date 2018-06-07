@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Mimibox</title>
     <link rel="shortcut icon" type="image/png" href="favicon-32x32.png"/>
+    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css"/>
     <script src="sjcl.js"></script>
     <style>
         @font-face {
@@ -52,28 +53,13 @@
             background: lightgray
         }
 
-        .icon-button {
-            background-size: 100%;
-            width: 16px;
-            height: 16px;
-            border: none;
+        i {
+            color: gray;
             margin: 0 0.5em;
         }
 
-        .copy-button {
-            background-image: url("copy.png");
-        }
-
-        .copy-button:hover {
-            background-image: url("copy-hover.png");
-        }
-
-        .delete-button {
-            background-image: url("trash.png");
-        }
-
-        .delete-button:hover {
-            background-image: url("trash-hover.png");
+        i:hover {
+            color: dodgerblue;
         }
 
         table {
@@ -173,9 +159,9 @@
       const usernameUi = document.createElement("td");
       usernameUi.textContent = username;
 
-      const copyPasswordButton = document.createElement("button");
-      copyPasswordButton.classList.add("icon-button");
-      copyPasswordButton.classList.add("copy-button");
+      const copyPasswordButton = document.createElement("i");
+      copyPasswordButton.classList.add("fas");
+      copyPasswordButton.classList.add("fa-copy");
       copyPasswordButton.onclick = () => {
         navigator.clipboard.writeText(password).finally(() => {
           setTimeout(() => {
@@ -191,9 +177,9 @@
       passwordUi.appendChild(copyPasswordButton);
       passwordUi.appendChild(passwordUiText);
 
-      const deleteButton = document.createElement("button");
-      deleteButton.classList.add("icon-button");
-      deleteButton.classList.add("delete-button");
+      const deleteButton = document.createElement("i");
+      deleteButton.classList.add("fas");
+      deleteButton.classList.add("fa-trash");
       deleteButton.onclick = () => {
         let isUserSure = confirm("Are you sure?");
         if (!isUserSure) {
