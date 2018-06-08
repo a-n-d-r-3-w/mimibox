@@ -56,10 +56,31 @@
         i {
             color: gray;
             margin: 0 0.5em;
+            position: relative; /* To position child tooltip element */
+        }
+
+        i .tooltip {
+            display: none;
+            font-family: "Lato Light", sans-serif;
+            font-size: 0.75em;
+            /* "width" should be set in JavaScript. */
+            background-color: dodgerblue;
+            color: white;
+            text-align: center;
+            border-radius: 0.5em;
+            padding: 4px 0;
+            position: absolute;
+            top: -2em;
+            /* "left" should be set in JavaScript. */
+            z-index: 1;
         }
 
         i:hover {
             color: dodgerblue;
+        }
+
+        i:hover .tooltip {
+            display: inline;
         }
 
         table {
@@ -170,6 +191,14 @@
         });
       };
 
+      const copyPasswordTooltip = document.createElement("span");
+      copyPasswordTooltip.classList.add("tooltip");
+      copyPasswordTooltip.textContent = "Copy password";
+      copyPasswordTooltip.style.width = "8em";
+      copyPasswordTooltip.style.left = "-3.5em";
+
+      copyPasswordButton.appendChild(copyPasswordTooltip);
+
       const passwordUiText = document.createElement("span");
       passwordUiText.textContent = showPasswords ? password : '················';
 
@@ -190,6 +219,14 @@
         mimibox.entries = nextEntries;
         updateUi();
       };
+
+      const deleteTooltip = document.createElement("span");
+      deleteTooltip.classList.add("tooltip");
+      deleteTooltip.textContent = "Delete";
+      deleteTooltip.style.width = "4em";
+      deleteTooltip.style.left = "-1.5em";
+      deleteButton.appendChild(deleteTooltip);
+
       const deleteButtonContainer = document.createElement("td");
       deleteButtonContainer.appendChild(deleteButton);
 
