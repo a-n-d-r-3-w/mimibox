@@ -94,6 +94,10 @@
         td {
             padding: 0.5em;
         }
+        
+        #filter {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -131,6 +135,11 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     <input type="text" id="new-entry-password">
     <button id="add" class="rectangular-button">Add</button>
 </fieldset>
+
+<div id="filter">
+    <label for="filter-input">Filter</label>
+    <input type="text" id="filter-input">
+</div>
 
 <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
 
@@ -344,6 +353,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
       updateUi();
+      document.getElementById("filter-input").focus();
     };
     reader.readAsText(selectedFile);
   };
