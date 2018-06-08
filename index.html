@@ -170,7 +170,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
   const ENTER_KEY = 13;
 
-  const updateUi = () => {
+  const updateUi = filterText => {
     const entriesUi = document.getElementById("entries");
 
     while (entriesUi.hasChildNodes()) {
@@ -180,6 +180,10 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     for (let i = 0; i < mimibox.entries.length; i++) {
       const entry = mimibox.entries[i];
       const {id, name, username, password} = entry;
+
+      if (filterText && name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+        continue;
+      }
 
       const nameUi = document.createElement("td");
       nameUi.textContent = name;
@@ -377,6 +381,10 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     updateUi();
   };
 
+  document.getElementById("filter-input").onkeyup = e => {
+    const filterText = e.target.value;
+    updateUi(filterText);
+  };
 </script>
 </body>
 </html>
