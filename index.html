@@ -103,8 +103,7 @@
 </h1>
 
 <ul>
-    <li>This page will reset in <span id="timer"></span> minutes to help protect your data. Please export any changes before then.</li>
-    <li>Passwords copied to the clipboard are cleared after 10 seconds.</li>
+    <li>This page will reload in <span id="timer"></span> minutes to help protect your data. Please export any changes before then.</li>
 </ul>
 
 <fieldset>
@@ -141,6 +140,7 @@
 
 <script>
   const ONE_MINUTE_IN_MS = 60000;
+  const TEN_SECONDS_IN_MS = 10000;
   let minutesBeforeClear = 60;
   const timer = document.getElementById("timer");
   timer.textContent = minutesBeforeClear.toString();
@@ -185,9 +185,10 @@
       copyPasswordButton.classList.add("fa-copy");
       copyPasswordButton.onclick = () => {
         navigator.clipboard.writeText(password).finally(() => {
+          alert(`${name} password copied. Clipboard will be cleared in ${TEN_SECONDS_IN_MS/1000} seconds.`);
           setTimeout(() => {
             navigator.clipboard.writeText("");
-          }, 10000);
+          }, TEN_SECONDS_IN_MS);
         });
       };
 
