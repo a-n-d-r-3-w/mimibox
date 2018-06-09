@@ -98,6 +98,12 @@
         #filter {
             text-align: center;
         }
+
+        #filter-input {
+            width: 26em;
+            font-size: 1em;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -138,7 +144,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
 <div id="filter">
     <label for="filter-input">Filter</label>
-    <input type="text" id="filter-input">
+    <input type="text" id="filter-input" placeholder="Hit ENTER to copy the first password from the first result">
 </div>
 
 <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
@@ -177,6 +183,8 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       entriesUi.removeChild(entriesUi.firstChild);
     }
 
+    let taggedFirstPasswordButton = false;
+
     for (let i = 0; i < mimibox.entries.length; i++) {
       const entry = mimibox.entries[i];
       const {id, name, username, password} = entry;
@@ -202,6 +210,11 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
           }, TEN_SECONDS_IN_MS);
         });
       };
+
+      if (!taggedFirstPasswordButton) {
+        copyPasswordButton.id = 'first-copy-password-button';
+        taggedFirstPasswordButton = true;
+      }
 
       const copyPasswordTooltip = document.createElement("span");
       copyPasswordTooltip.classList.add("tooltip");
@@ -381,9 +394,17 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     updateUi();
   };
 
-  document.getElementById("filter-input").onkeyup = e => {
+  const filterInput = document.getElementById("filter-input");
+  filterInput.onkeyup = e => {
     const filterText = e.target.value;
     updateUi(filterText);
+  };
+
+  filterInput.onkeydown = e => {
+    if (e.keyCode !== ENTER_KEY) {
+      return;
+    }
+    document.getElementById('first-copy-password-button').click();
   };
 </script>
 </body>
