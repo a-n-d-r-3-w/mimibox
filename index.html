@@ -103,6 +103,14 @@
             width: 26em;
             text-align: center;
         }
+
+        .button-group {
+            margin: 1em;
+        }
+
+        #file {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -113,13 +121,11 @@
 
 This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before then.
 
-<fieldset>
-    <legend>Import passwords from file</legend>
-    <input type="file" id="file">
-    <label for="import-password">Password</label>
-    <input type="password" id="import-password">
-    <button id="import" class="rectangular-button">Import</button>
-</fieldset>
+<div class="button-group">
+    <button class="rectangular-button" id="import">Import</button>
+    <button class="rectangular-button" id="export-2">Export</button>
+</div>
+<input type="file" id="file">
 
 <fieldset>
     <legend>Export passwords to file</legend>
@@ -342,20 +348,22 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     exportButton.click();
   };
 
-  const importPasswordElement = document.getElementById("import-password");
-
-  const importButton = document.getElementById("import");
+  const importButton = document.getElementById("import")
   importButton.onclick = () => {
-    const selectedFile = document.getElementById("file").files[0];
+    fileInput.click();
+  };
+  importButton.focus();
+
+  const fileInput = document.getElementById("file");
+  fileInput.onchange = () => {
+    const selectedFile = fileInput.files[0];
     if (!selectedFile) {
-      alert('Please select a file');
       return;
     }
-    const importPassword = importPasswordElement.value;
-    if (!importPassword) {
-      alert('Please enter a password.');
-      return;
-    }
+    fileInput.value = '';
+
+    const importPassword = prompt('Enter password');
+
     const reader = new FileReader();
     reader.onload = event => {
       const encrypted = event.target.result;
@@ -363,9 +371,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       try {
         decrypted = sjcl.decrypt(importPassword, encrypted);
       } catch (error) {
-        alert('Incorrect password.');
-        importPasswordElement.value = '';
-        importPasswordElement.focus();
+        alert('Incorrect password');
       }
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
@@ -373,20 +379,6 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       document.getElementById("filter-input").focus();
     };
     reader.readAsText(selectedFile);
-  };
-
-  const fileInput = document.getElementById("file");
-  fileInput.onchange = () => {
-    importPasswordElement.focus();
-  };
-
-  fileInput.focus();
-
-  document.getElementById("import-password").onkeydown = e => {
-    if (e.keyCode !== ENTER_KEY) {
-      return;
-    }
-    importButton.click();
   };
 
   document.getElementById("show-hide-passwords").onclick = () => {
@@ -409,6 +401,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       e.target.value = '';
     }
   };
+
 </script>
 </body>
 </html>
