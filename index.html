@@ -123,18 +123,9 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
 <div class="button-group">
     <button class="rectangular-button" id="import">Import</button>
-    <button class="rectangular-button" id="export-2">Export</button>
+    <button class="rectangular-button" id="export">Export</button>
 </div>
 <input type="file" id="file">
-
-<fieldset>
-    <legend>Export passwords to file</legend>
-    <label for="export-password">Password</label>
-    <input type="password" id="export-password">
-    <label for="confirm-export-password">Confirm password</label>
-    <input type="password" id="confirm-export-password">
-    <button id="export" class="rectangular-button">Export</button>
-</fieldset>
 
 <fieldset>
     <legend>Add entry</legend>
@@ -158,7 +149,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
 <script>
   const ONE_MINUTE_IN_MS = 60000;
-  const TEN_SECONDS_IN_MS = 10000;
+  const TWENTY_SECONDS_IN_MS = 20000;
   let minutesBeforeClear = 60;
   const timer = document.getElementById("timer");
   timer.textContent = minutesBeforeClear.toString();
@@ -210,10 +201,10 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       copyPasswordButton.classList.add("fa-copy");
       copyPasswordButton.onclick = () => {
         navigator.clipboard.writeText(password).finally(() => {
-          alert(`${name} password copied. Clipboard will be cleared in ${TEN_SECONDS_IN_MS/1000} seconds.`);
+          alert(`${name} password copied. Clipboard will be cleared in ${TWENTY_SECONDS_IN_MS/1000} seconds.`);
           setTimeout(() => {
             navigator.clipboard.writeText("");
-          }, TEN_SECONDS_IN_MS);
+          }, TWENTY_SECONDS_IN_MS);
         });
       };
 
@@ -324,30 +315,6 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     }
   }
 
-  const exportButton = document.getElementById("export");
-  exportButton.onclick = () => {
-    const entriesAsString = JSON.stringify(mimibox.entries);
-    const exportPassword = document.getElementById("export-password").value;
-    if (!exportPassword) {
-      alert('Please enter a password.');
-      return;
-    }
-    const confirmExportPassword = document.getElementById("confirm-export-password").value;
-    if (exportPassword !== confirmExportPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-    const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
-    download(encrypted, "mimibox.dat", 'text/plain');
-  };
-
-  document.getElementById("confirm-export-password").onkeydown = e => {
-    if (e.keyCode !== ENTER_KEY) {
-      return;
-    }
-    exportButton.click();
-  };
-
   const importButton = document.getElementById("import")
   importButton.onclick = () => {
     fileInput.click();
@@ -362,7 +329,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     }
     fileInput.value = '';
 
-    const importPassword = prompt('Enter password');
+    const importPassword = prompt('Enter import password');
 
     const reader = new FileReader();
     reader.onload = event => {
@@ -379,6 +346,23 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       document.getElementById("filter-input").focus();
     };
     reader.readAsText(selectedFile);
+  };
+
+  const exportButton = document.getElementById("export");
+  exportButton.onclick = () => {
+    const exportPassword = prompt('Enter export password');
+    if (!exportPassword) {
+      alert('Password cannot be empty');
+      return;
+    }
+    const confirmExportPassword = prompt('Confirm export password');
+    if (confirmExportPassword !== exportPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    const entriesAsString = JSON.stringify(mimibox.entries);
+    const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
+    download(encrypted, "mimibox.dat", 'text/plain');
   };
 
   document.getElementById("show-hide-passwords").onclick = () => {
