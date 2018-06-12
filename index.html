@@ -152,6 +152,16 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     <input id="import-password" type="password" />
 </dialog>
 
+<dialog id="export-password-dialog">
+    <label for="export-password">Enter export password:</label>
+    <input id="export-password" type="password" />
+</dialog>
+
+<dialog id="confirm-export-password-dialog">
+    <label for="confirm-export-password">Confirm export password:</label>
+    <input id="confirm-export-password" type="password" />
+</dialog>
+
 <script>
   const ONE_MINUTE_IN_MS = 60000;
   const TWENTY_SECONDS_IN_MS = 20000;
@@ -168,6 +178,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
   let showPasswords = false;
   let selectedFile = null;
+  let exportPassword = null;
 
   const mimibox = {
     entries: [
@@ -339,19 +350,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
   const exportButton = document.getElementById("export");
   exportButton.onclick = () => {
-    const exportPassword = prompt('Enter export password');
-    if (!exportPassword) {
-      alert('Password cannot be empty');
-      return;
-    }
-    const confirmExportPassword = prompt('Confirm export password');
-    if (confirmExportPassword !== exportPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    const entriesAsString = JSON.stringify(mimibox.entries);
-    const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
-    download(encrypted, "mimibox.dat", 'text/plain');
+    document.getElementById("export-password-dialog").showModal();
   };
 
   document.getElementById("show-hide-passwords").onclick = () => {
@@ -376,7 +375,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
   };
 
   document.getElementById("import-password").onkeydown = e => {
-    if (e.keyCode === ENTER_KEY) {
+    if (e.keyCode === ENTER_KEY && e.target.value) {
       const importPassword = e.target.value;
       e.target.value = '';
       const reader = new FileReader();
@@ -405,6 +404,47 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       document.getElementById("import").focus();
     }
   };
+
+  document.getElementById("export-password-dialog").onkeydown = e => {
+    if (e.keyCode === ENTER_KEY && e.target.value) {
+      exportPassword = e.target.value;
+      e.target.value = '';
+      document.getElementById("export-password-dialog").close();
+      document.getElementById("confirm-export-password-dialog").showModal();
+    }
+    if (e.keyCode === ESCAPE_KEY) {
+      e.target.value = '';
+      exportPassword = null;
+      document.getElementById("export-password-dialog").close();
+      document.getElementById("export").focus();
+    }
+  };
+
+  document.getElementById("confirm-export-password-dialog").onkeydown = e => {
+    if (e.keyCode === ENTER_KEY && e.target.value) {
+      const confirmExportPassword = e.target.value;
+      e.target.value = '';
+      if (confirmExportPassword !== exportPassword) {
+        exportPassword = null;
+        document.getElementById("confirm-export-password-dialog").close();
+        alert('Passwords do not match');
+        setTimeout(() => {
+          document.getElementById("export").focus();
+        }, 100); // Delay required before focus(), or else the export-password-dialog is opened again.
+        return;
+      }
+      const entriesAsString = JSON.stringify(mimibox.entries);
+      const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
+      download(encrypted, "mimibox.dat", 'text/plain');
+      document.getElementById("confirm-export-password-dialog").close();
+    }
+    if (e.keyCode === ESCAPE_KEY) {
+      e.target.value = '';
+      exportPassword = null;
+      document.getElementById("confirm-export-password-dialog").close();
+      document.getElementById("export").focus();
+    }
+  }
 </script>
 </body>
 </html>
