@@ -147,6 +147,11 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
 <table id="entries"></table>
 
+<dialog id="import-password-dialog">
+    <label for="import-password">Enter import password:</label>
+    <input id="import-password" type="password" />
+</dialog>
+
 <script>
   const ONE_MINUTE_IN_MS = 60000;
   const TWENTY_SECONDS_IN_MS = 20000;
@@ -162,6 +167,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
   }, ONE_MINUTE_IN_MS);
 
   let showPasswords = false;
+  let selectedFile = null;
 
   const mimibox = {
     entries: [
@@ -323,29 +329,12 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
   const fileInput = document.getElementById("file");
   fileInput.onchange = () => {
-    const selectedFile = fileInput.files[0];
+    selectedFile = fileInput.files[0];
     if (!selectedFile) {
       return;
     }
     fileInput.value = '';
-
-    const importPassword = prompt('Enter import password');
-
-    const reader = new FileReader();
-    reader.onload = event => {
-      const encrypted = event.target.result;
-      let decrypted;
-      try {
-        decrypted = sjcl.decrypt(importPassword, encrypted);
-      } catch (error) {
-        alert('Incorrect password');
-      }
-      const entries = JSON.parse(decrypted);
-      mimibox.entries = entries;
-      updateUi();
-      document.getElementById("filter-input").focus();
-    };
-    reader.readAsText(selectedFile);
+    document.getElementById("import-password-dialog").showModal();
   };
 
   const exportButton = document.getElementById("export");
@@ -386,6 +375,36 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     }
   };
 
+  document.getElementById("import-password").onkeydown = e => {
+    if (e.keyCode === ENTER_KEY) {
+      const importPassword = e.target.value;
+      e.target.value = '';
+      const reader = new FileReader();
+      reader.onload = event => {
+        const encrypted = event.target.result;
+        let decrypted;
+        try {
+          decrypted = sjcl.decrypt(importPassword, encrypted);
+        } catch (error) {
+          alert('Incorrect password');
+          document.getElementById("import-password-dialog").close();
+          document.getElementById("import").focus();
+          return;
+        }
+        const entries = JSON.parse(decrypted);
+        mimibox.entries = entries;
+        updateUi();
+        document.getElementById("import-password-dialog").close();
+        document.getElementById("filter-input").focus();
+      };
+      reader.readAsText(selectedFile);
+    }
+    if (e.keyCode === ESCAPE_KEY) {
+      e.target.value = '';
+      document.getElementById("import-password-dialog").close();
+      document.getElementById("import").focus();
+    }
+  };
 </script>
 </body>
 </html>
