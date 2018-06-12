@@ -180,6 +180,26 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
   let selectedFile = null;
   let exportPassword = null;
 
+  const importButton = document.getElementById("import");
+  const fileInput = document.getElementById("file");
+  const importPasswordDialog = document.getElementById("import-password-dialog");
+  const importPasswordInput = document.getElementById("import-password");
+
+  const exportButton = document.getElementById("export");
+  const exportPasswordDialog = document.getElementById("export-password-dialog");
+  const exportPasswordInput = document.getElementById("export-password");
+  const confirmExportPasswordDialog = document.getElementById("confirm-export-password-dialog");
+  const confirmExportPasswordInput = document.getElementById("confirm-export-password");
+
+  const newEntryNameInput = document.getElementById("new-entry-name");
+  const newEntryUsernameInput = document.getElementById("new-entry-username");
+  const newEntryPasswordInput = document.getElementById("new-entry-password");
+  const addButton = document.getElementById("add");
+
+  const filterInput = document.getElementById("filter-input");
+  const showHidePasswordButton = document.getElementById("show-hide-passwords");
+  const entriesUi = document.getElementById("entries");
+
   const mimibox = {
     entries: [
       {id: '1342423423423', name: 'GitHub', username: 'eldrago', password: 'yV~@~%{a+9PS,+%\\#'},
@@ -191,7 +211,6 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
   const ESCAPE_KEY = 27;
 
   const updateUi = filterText => {
-    const entriesUi = document.getElementById("entries");
 
     while (entriesUi.hasChildNodes()) {
       entriesUi.removeChild(entriesUi.firstChild);
@@ -282,14 +301,10 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 
   updateUi();
 
-  const addButton = document.getElementById("add");
   addButton.onclick = () => {
-    const nameElement = document.getElementById("new-entry-name");
-    const name = nameElement.value;
-    const usernameElement = document.getElementById("new-entry-username");
-    const username = usernameElement.value;
-    const passwordElement = document.getElementById("new-entry-password");
-    const password = passwordElement.value;
+    const name = newEntryNameInput.value;
+    const username = newEntryUsernameInput.value;
+    const password = newEntryPasswordInput.value;
     if (!name) {
       alert('Please enter a name.');
       return;
@@ -301,13 +316,13 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
       password,
     });
     updateUi();
-    nameElement.value = '';
-    usernameElement.value = '';
-    passwordElement.value = '';
-    nameElement.focus();
+    newEntryNameInput.value = '';
+    newEntryUsernameInput.value = '';
+    newEntryPasswordInput.value = '';
+    newEntryNameInput.focus();
   };
 
-  document.getElementById("new-entry-password").onkeydown = e => {
+  newEntryPasswordInput.onkeydown = e => {
     if (e.keyCode !== ENTER_KEY) {
       return;
     }
@@ -332,33 +347,29 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     }
   }
 
-  const importButton = document.getElementById("import")
-  importButton.onclick = () => {
-    fileInput.click();
-  };
-  importButton.focus();
-
-  const fileInput = document.getElementById("file");
   fileInput.onchange = () => {
     selectedFile = fileInput.files[0];
     if (!selectedFile) {
       return;
     }
     fileInput.value = '';
-    document.getElementById("import-password-dialog").showModal();
+    importPasswordDialog.showModal();
   };
 
-  const exportButton = document.getElementById("export");
+  importButton.onclick = () => {
+    fileInput.click();
+  };
+  importButton.focus();
+
   exportButton.onclick = () => {
-    document.getElementById("export-password-dialog").showModal();
+    exportPasswordDialog.showModal();
   };
 
-  document.getElementById("show-hide-passwords").onclick = () => {
+  showHidePasswordButton.onclick = () => {
     showPasswords = !showPasswords;
     updateUi();
   };
 
-  const filterInput = document.getElementById("filter-input");
   filterInput.onkeyup = e => {
     const filterText = e.target.value;
     updateUi(filterText);
@@ -374,7 +385,7 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
     }
   };
 
-  document.getElementById("import-password").onkeydown = e => {
+  importPasswordInput.onkeydown = e => {
     if (e.keyCode === ENTER_KEY && e.target.value) {
       const importPassword = e.target.value;
       e.target.value = '';
@@ -386,63 +397,63 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
           decrypted = sjcl.decrypt(importPassword, encrypted);
         } catch (error) {
           alert('Incorrect password');
-          document.getElementById("import-password-dialog").close();
-          document.getElementById("import").focus();
+          importPasswordDialog.close();
+          importButton.focus();
           return;
         }
         const entries = JSON.parse(decrypted);
         mimibox.entries = entries;
         updateUi();
-        document.getElementById("import-password-dialog").close();
-        document.getElementById("filter-input").focus();
+        importPasswordDialog.close();
+        filterInput.focus();
       };
       reader.readAsText(selectedFile);
     }
     if (e.keyCode === ESCAPE_KEY) {
       e.target.value = '';
-      document.getElementById("import-password-dialog").close();
-      document.getElementById("import").focus();
+      importPasswordDialog.close();
+      importButton.focus();
     }
   };
 
-  document.getElementById("export-password-dialog").onkeydown = e => {
+  exportPasswordInput.onkeydown = e => {
     if (e.keyCode === ENTER_KEY && e.target.value) {
       exportPassword = e.target.value;
       e.target.value = '';
-      document.getElementById("export-password-dialog").close();
-      document.getElementById("confirm-export-password-dialog").showModal();
+      exportPasswordDialog.close();
+      confirmExportPasswordDialog.showModal();
     }
     if (e.keyCode === ESCAPE_KEY) {
       e.target.value = '';
       exportPassword = null;
-      document.getElementById("export-password-dialog").close();
-      document.getElementById("export").focus();
+      exportPasswordDialog.close();
+      exportButton.focus();
     }
   };
 
-  document.getElementById("confirm-export-password-dialog").onkeydown = e => {
+  confirmExportPasswordInput.onkeydown = e => {
     if (e.keyCode === ENTER_KEY && e.target.value) {
       const confirmExportPassword = e.target.value;
       e.target.value = '';
       if (confirmExportPassword !== exportPassword) {
         exportPassword = null;
-        document.getElementById("confirm-export-password-dialog").close();
+        confirmExportPasswordDialog.close();
         alert('Passwords do not match');
         setTimeout(() => {
-          document.getElementById("export").focus();
+          exportButton.focus();
         }, 100); // Delay required before focus(), or else the export-password-dialog is opened again.
         return;
       }
       const entriesAsString = JSON.stringify(mimibox.entries);
       const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
       download(encrypted, "mimibox.dat", 'text/plain');
-      document.getElementById("confirm-export-password-dialog").close();
+      confirmExportPasswordDialog.close();
     }
     if (e.keyCode === ESCAPE_KEY) {
       e.target.value = '';
       exportPassword = null;
-      document.getElementById("confirm-export-password-dialog").close();
-      document.getElementById("export").focus();
+      confirmExportPasswordDialog.close();
+      exportButton.focus();
     }
   }
 </script>
