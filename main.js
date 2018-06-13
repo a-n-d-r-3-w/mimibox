@@ -291,3 +291,8 @@ confirmExportPasswordInput.onkeydown = e => {
     exportButton.focus();
   }
 };
+
+const lightDarkThemeButton = document.getElementById("light-dark-theme");
+lightDarkThemeButton.onclick = () => {
+  document.getElementsByTagName("body")[0].classList.toggle("dark");
+};
