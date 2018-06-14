@@ -292,7 +292,16 @@ confirmExportPasswordInput.onkeydown = e => {
   }
 };
 
+const body = document.getElementsByTagName("body")[0];
+const DARK_THEME_CSS_CLASS = "dark";
+const DARK_THEME_LOCAL_STORAGE_KEY = 'mimibox.isDark';
+
 const lightDarkThemeButton = document.getElementById("light-dark-theme");
 lightDarkThemeButton.onclick = () => {
-  document.getElementsByTagName("body")[0].classList.toggle("dark");
+  const isDark = body.classList.toggle(DARK_THEME_CSS_CLASS);
+  localStorage.setItem(DARK_THEME_LOCAL_STORAGE_KEY, isDark.toString());
 };
+
+if (localStorage.getItem(DARK_THEME_LOCAL_STORAGE_KEY) === 'true') {
+  document.getElementsByTagName("body")[0].classList.add(DARK_THEME_CSS_CLASS);
+}
