@@ -4,7 +4,7 @@
 }
 
 body {
-    padding: 1em 5em;
+    padding: 1rem 5rem;
     font-family: "Lato Light", sans-serif;
 }
 
@@ -23,26 +23,26 @@ img {
 
 fieldset {
     border: 1px solid gray;
-    border-radius: 0.8em;
-    margin: 1em 0;
-    padding: 1em 1.2em 1.5em 1.2em;
+    border-radius: 0.8rem;
+    margin: 1rem 0;
+    padding: 1rem 1.2rem 1.5rem 1.2rem;
 }
 
 legend {
     border: 1px solid gray;
-    border-radius: 0.5em;
-    padding: 0.3em 0.7em 0.5em 0.7em;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.7rem 0.5rem 0.7rem;
 }
 
 input {
-    margin-right: 1em;
+    margin-right: 1rem;
 }
 
 .rectangular-button {
     border: 1px solid lightgray;
-    border-radius: 0.5em;
-    line-height: 2em;
-    padding: 0 1em;
+    border-radius: 0.25rem;
+    line-height: 1.25rem;
+    padding: 0 0.75rem;
 }
 
 .rectangular-button:hover {
@@ -51,22 +51,22 @@ input {
 
 i {
     color: gray;
-    margin: 0 0.5em;
+    margin: 0 0.5rem;
     position: relative; /* To position child tooltip element */
 }
 
 i .tooltip {
     display: none;
     font-family: "Lato Light", sans-serif;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     /* "width" should be set in JavaScript. */
     background-color: dodgerblue;
     color: white;
     text-align: center;
-    border-radius: 0.5em;
+    border-radius: 0.25rem;
     padding: 4px 0;
     position: absolute;
-    top: -2em;
+    top: -1.5rem;
     /* "left" should be set in JavaScript. */
     z-index: 1;
 }
@@ -88,7 +88,7 @@ tr {
 }
 
 td {
-    padding: 0.5em;
+    padding: 0.5rem;
 }
 
 #filter {
@@ -96,14 +96,21 @@ td {
 }
 
 #filter-input {
-    width: 26em;
+    width: 20rem;
     text-align: center;
 }
 
 .button-group {
-    margin: 1em;
+    margin: 1rem;
 }
 
 #file {
     display: none;
+}
+
+#help {
+    position: absolute;
+    top: 1rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
 }
