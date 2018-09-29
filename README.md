@@ -3,7 +3,7 @@
 *[Halberdier](https://github.com/a-n-d-r-3-w/halberdier)* is a local (offline) password manager for Mac based on ElectronJS. The functionality is small in scope, yet the packaged .APP file is larger than 100 MB, and unless I pay Apple $100 every year to distribute the app via their app store, Mac users see an "unidentified developer" warning when trying to launch the app.
 
 ### Solution
-*Mimibox* is an offline password manager for Chrome that is smaller than 1 MB and easily installed and launched without the "unidentified developer" warning.
+*Mimibox* is an offline password manager for Chrome that is about 1 MB and easily installed and launched without the "unidentified developer" warning.
 
 ![screenshot](screenshot.png?raw=true)
 
