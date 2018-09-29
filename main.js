@@ -53,6 +53,20 @@ const updateUi = filterText => {
 
   let taggedFirstPasswordButton = false;
 
+  const headerUi = document.createElement('tr');
+  const headerAccountUi = document.createElement('th');
+  headerAccountUi.textContent = 'Account';
+  const headerUsernameUi = document.createElement('th');
+  headerUsernameUi.textContent = 'Username';
+  const headerPasswordUi = document.createElement('th');
+  headerPasswordUi.textContent = 'Password';
+  const headerDeleteUi = document.createElement('th');
+  headerUi.appendChild(headerAccountUi);
+  headerUi.appendChild(headerUsernameUi);
+  headerUi.appendChild(headerPasswordUi);
+  headerUi.appendChild(headerDeleteUi);
+  entriesUi.appendChild(headerUi);
+
   for (let i = 0; i < mimibox.entries.length; i++) {
     const entry = mimibox.entries[i];
     const {id, account, username, password} = entry;
