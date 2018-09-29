@@ -37,8 +37,8 @@ const entriesUi = document.getElementById("entries");
 
 const mimibox = {
   entries: [
-    {id: '1342423423423', name: 'GitHub', username: 'eldrago', password: 'yV~@~%{a+9PS,+%\\#'},
-    {id: '3565634353453', name: 'JetBrains', username: 'wonderboom', password: 'BddhaXJK'}
+    {id: '1342423423423', account: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%\\#'},
+    {id: '3565634353453', account: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK'}
   ],
 };
 
@@ -55,14 +55,14 @@ const updateUi = filterText => {
 
   for (let i = 0; i < mimibox.entries.length; i++) {
     const entry = mimibox.entries[i];
-    const {id, name, username, password} = entry;
+    const {id, account, username, password} = entry;
 
-    if (filterText && name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+    if (filterText && account.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       continue;
     }
 
-    const nameUi = document.createElement("td");
-    nameUi.textContent = name;
+    const accountUi = document.createElement("td");
+    accountUi.textContent = account;
 
     const usernameUi = document.createElement("td");
     usernameUi.textContent = username;
@@ -72,7 +72,7 @@ const updateUi = filterText => {
     copyPasswordButton.classList.add("fa-copy");
     copyPasswordButton.onclick = () => {
       navigator.clipboard.writeText(password).finally(() => {
-        alert(`${name} password copied. Clipboard will be cleared in ${TWENTY_SECONDS_IN_MS / 1000} seconds.`);
+        alert(`${account} password copied. Clipboard will be cleared in ${TWENTY_SECONDS_IN_MS / 1000} seconds.`);
         setTimeout(() => {
           navigator.clipboard.writeText("");
         }, TWENTY_SECONDS_IN_MS);
@@ -125,7 +125,7 @@ const updateUi = filterText => {
 
     const entryUi = document.createElement("tr");
     entryUi.id = id;
-    entryUi.appendChild(nameUi);
+    entryUi.appendChild(accountUi);
     entryUi.appendChild(usernameUi);
     entryUi.appendChild(passwordUi);
     entryUi.appendChild(deleteButtonContainer);
@@ -137,16 +137,16 @@ const updateUi = filterText => {
 updateUi();
 
 addButton.onclick = () => {
-  const name = newEntryAccountInput.value;
+  const account = newEntryAccountInput.value;
   const username = newEntryUsernameInput.value;
   const password = newEntryPasswordInput.value;
-  if (!name) {
-    alert('Please enter a name.');
+  if (!account) {
+    alert('Please enter an account name.');
     return;
   }
   mimibox.entries.unshift({
     id: Date.now(),
-    name,
+    account,
     username,
     password,
   });
