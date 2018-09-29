@@ -114,4 +114,5 @@ td {
     top: 1rem;
     right: 0.5rem;
     font-size: 1.5rem;
+    display: none; /* TODO: Help button is not yet implemented. */
 }
