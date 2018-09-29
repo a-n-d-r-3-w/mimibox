@@ -26,7 +26,7 @@ const exportPasswordInput = document.getElementById("export-password");
 const confirmExportPasswordDialog = document.getElementById("confirm-export-password-dialog");
 const confirmExportPasswordInput = document.getElementById("confirm-export-password");
 
-const newEntryNameInput = document.getElementById("new-entry-name");
+const newEntryAccountInput = document.getElementById("new-entry-account");
 const newEntryUsernameInput = document.getElementById("new-entry-username");
 const newEntryPasswordInput = document.getElementById("new-entry-password");
 const addButton = document.getElementById("add");
@@ -137,7 +137,7 @@ const updateUi = filterText => {
 updateUi();
 
 addButton.onclick = () => {
-  const name = newEntryNameInput.value;
+  const name = newEntryAccountInput.value;
   const username = newEntryUsernameInput.value;
   const password = newEntryPasswordInput.value;
   if (!name) {
@@ -151,10 +151,10 @@ addButton.onclick = () => {
     password,
   });
   updateUi();
-  newEntryNameInput.value = '';
+  newEntryAccountInput.value = '';
   newEntryUsernameInput.value = '';
   newEntryPasswordInput.value = '';
-  newEntryNameInput.focus();
+  newEntryAccountInput.focus();
 };
 
 newEntryPasswordInput.onkeydown = e => {
