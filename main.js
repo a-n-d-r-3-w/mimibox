@@ -160,7 +160,7 @@ addButton.onclick = () => {
   }
   mimibox.entries.unshift({
     id: Date.now(),
-    name,
+    name: account, /* Rename variable to retain backwards compatibility. */
     username,
     password,
   });
