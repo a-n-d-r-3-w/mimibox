@@ -37,8 +37,8 @@ const entriesUi = document.getElementById("entries");
 
 const mimibox = {
   entries: [
-    {id: '1342423423423', account: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%\\#'},
-    {id: '3565634353453', account: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK'}
+    {id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%\\#'},
+    {id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK'}
   ],
 };
 
@@ -69,14 +69,14 @@ const updateUi = filterText => {
 
   for (let i = 0; i < mimibox.entries.length; i++) {
     const entry = mimibox.entries[i];
-    const {id, account, username, password} = entry;
+    const {id, name, username, password} = entry;
 
-    if (filterText && account.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+    if (filterText && name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       continue;
     }
 
     const accountUi = document.createElement("td");
-    accountUi.textContent = account;
+    accountUi.textContent = name;
 
     const usernameUi = document.createElement("td");
     usernameUi.textContent = username;
@@ -86,7 +86,7 @@ const updateUi = filterText => {
     copyPasswordButton.classList.add("fa-copy");
     copyPasswordButton.onclick = () => {
       navigator.clipboard.writeText(password).finally(() => {
-        alert(`${account} password copied. Clipboard will be cleared in ${TWENTY_SECONDS_IN_MS / 1000} seconds.`);
+        alert(`${name} password copied. Clipboard will be cleared in ${TWENTY_SECONDS_IN_MS / 1000} seconds.`);
         setTimeout(() => {
           navigator.clipboard.writeText("");
         }, TWENTY_SECONDS_IN_MS);
@@ -160,7 +160,7 @@ addButton.onclick = () => {
   }
   mimibox.entries.unshift({
     id: Date.now(),
-    account,
+    name,
     username,
     password,
   });
