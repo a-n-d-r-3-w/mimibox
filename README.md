@@ -5,7 +5,11 @@
 ### Solution
 *Mimibox* is an offline password manager for Chrome that is about 1 MB and easily installed and launched without the "unidentified developer" warning.
 
+##### Light theme
 ![screenshot](screenshot.png?raw=true)
+
+##### Dark theme
+![screenshot](screenshot-dark.png?raw=true)
 
 # Instructions
 
