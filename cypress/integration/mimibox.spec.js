@@ -10,9 +10,12 @@ describe('My First Test', () => {
         cy.visit('./index.html')
 
         cy.get('#entries tr').should('have.length', 3);
-        cy.get('#entries tr').eq(0).get('th').eq(0).contains('th', 'Account');
-        cy.get('#entries tr').eq(0).get('th').eq(1).contains('th', 'Username');
-        cy.get('#entries tr').eq(0).get('th').eq(2).contains('th', 'Password');
+        cy.get('#entries tr').eq(0)
+        .within(() => {
+            cy.get('th').eq(0).contains('th', 'Account');
+            cy.get('th').eq(1).contains('th', 'Username');
+            cy.get('th').eq(2).contains('th', 'Password');
+        })
 
         cy.get('#new-entry-account').type('Gmail');
         cy.get('#new-entry-username').type('mimibox@gmail.com');
@@ -24,8 +27,11 @@ describe('My First Test', () => {
         cy.get('#new-entry-password').should('be.empty');
 
         cy.get('#entries tr').should('have.length', 4);
-
-        cy.get('#entries tr').eq(1).get('td').eq(0).contains('Gmail');
-        cy.get('#entries tr').eq(1).get('td').eq(1).contains('mimibox@gmail.com');
+        cy.get('#entries tr').eq(1)
+        .within(() => {
+            cy.get('td').eq(0).contains('Gmail');
+            cy.get('td').eq(1).contains('mimibox@gmail.com');
+            cy.get('td').eq(2).contains('················');
+        });
     })
 })
