@@ -38,6 +38,12 @@ describe('Mimibox', () => {
             cy.get('td').eq(2).contains('················');
         });
 
+        cy.on('window:alert', cy.stub().as('alert'));
         cy.get('#first-copy-password-button').click();
+        cy.get('@alert').should('have.been.calledWith', `Gmail password copied. Clipboard will be cleared in 20 seconds.`)
+
+        cy.window().its('navigator.clipboard')
+        .invoke('readText')
+        .should('equal', 'guitar45Conjured51noted')
     })
 })
