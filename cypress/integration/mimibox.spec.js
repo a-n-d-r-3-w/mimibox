@@ -5,8 +5,8 @@
 // check out the link below and learn how to write your first test:
 // https://on.cypress.io/writing-first-test
 
-describe('My First Test', () => {
-    it('Visits the Kitchen Sink', () => {
+describe('Mimibox', () => {
+    it('Initial state', () => {
         cy.visit('./index.html')
 
         cy.get('#entries tr').should('have.length', 3);
@@ -16,6 +16,10 @@ describe('My First Test', () => {
             cy.get('th').eq(1).contains('th', 'Username');
             cy.get('th').eq(2).contains('th', 'Password');
         })
+    })
+
+    it('Add entry', () => {
+        cy.visit('./index.html')
 
         cy.get('#new-entry-account').type('Gmail');
         cy.get('#new-entry-username').type('mimibox@gmail.com');
@@ -33,5 +37,7 @@ describe('My First Test', () => {
             cy.get('td').eq(1).contains('mimibox@gmail.com');
             cy.get('td').eq(2).contains('················');
         });
+
+        cy.get('#first-copy-password-button').click();
     })
 })
