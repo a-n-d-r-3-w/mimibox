@@ -45,5 +45,11 @@ describe('Mimibox', () => {
         cy.window().its('navigator.clipboard')
         .invoke('readText')
         .should('equal', 'guitar45Conjured51noted')
+
+        cy.wait(20000);
+
+        cy.window().its('navigator.clipboard')
+        .invoke('readText')
+        .should('equal', '')
     })
 })
