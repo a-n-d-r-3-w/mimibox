@@ -17,7 +17,8 @@
     "url": "https://github.com/a-n-d-r-3-w/mimibox/issues"
   },
   "homepage": "https://github.com/a-n-d-r-3-w/mimibox#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "cypress": "^8.6.0"
   }
 }
