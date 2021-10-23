@@ -41,7 +41,7 @@ const entriesUi = document.getElementById("entries");
 
 const mimibox = {
   entries: [
-    {id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%\\#'},
+    {id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#'},
     {id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK'}
   ],
 };

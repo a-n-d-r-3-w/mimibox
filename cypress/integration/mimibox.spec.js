@@ -82,4 +82,26 @@ describe('Mimibox', () => {
          cy.contains(/^Gmail$/).should('not.exist');
          cy.contains(/^mimibox@gmail.com$/).should('not.exist');
     })
+
+    it('Search password', () => {
+        cy.visit('index.html')
+
+        cy.get('#entries tr').should('have.length', 3);
+
+        cy.on('window:alert', cy.stub().as('alert'));
+        cy.get('#filter-input').type('1');
+
+        cy.get('#entries tr').should('have.length', 2);
+
+        cy.get('#filter-input').type('{enter}');
+        cy.get('@alert').should('have.been.calledWith', `Example account #1 password copied. Clipboard will be cleared in 20 seconds.`)
+
+        cy.window().its('navigator.clipboard')
+            .invoke('readText')
+            .should('equal', 'yV~@~%{a+9PS,+%#')
+
+        cy.get('#filter-input').type('{esc}');
+        cy.get('#filter-input').should('be.empty');
+        cy.get('#entries tr').should('have.length', 3);
+    })
 })
