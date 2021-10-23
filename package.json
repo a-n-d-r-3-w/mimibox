@@ -1,10 +1,11 @@
 {
   "name": "mimibox",
   "version": "1.0.0",
-  "description": "*[Halberdier](https://github.com/a-n-d-r-3-w/halberdier)* is a local (offline) password manager for Mac based on ElectronJS. The functionality is small in scope, yet the packaged .APP file is larger than 100 MB, and unless I pay Apple $100 every year to distribute the app via their app store, Mac users see an \"unidentified developer\" warning when trying to launch the app.",
+  "description": "*[Mimibox](https://github.com/a-n-d-r-3-w/mimibox)* is a 100% offline password manager",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/a-n-d-r-3-w/mimibox#readme",
   "dependencies": {},
   "devDependencies": {
-    "cypress": "^8.6.0"
+    "cypress": "^8.6.0",
+    "husky": "^7.0.0"
   }
 }
