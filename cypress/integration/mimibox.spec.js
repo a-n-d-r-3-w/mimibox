@@ -18,9 +18,12 @@ describe('Mimibox', () => {
         })
     })
 
-    it('Add entry', () => {
+    it('Add, use, and delete secret', () => {
         cy.visit('index.html?clipboardTimeoutInMilliseconds=100')
 
+        /**
+         * Add email account
+         */
         cy.get('#new-entry-account').type('Gmail');
         cy.get('#new-entry-username').type('mimibox@gmail.com');
         cy.get('#new-entry-password').type('guitar45Conjured51noted');
@@ -33,11 +36,14 @@ describe('Mimibox', () => {
         cy.get('#entries tr').should('have.length', 4);
         cy.get('#entries tr').eq(1)
         .within(() => {
-            cy.get('td').eq(0).contains('Gmail');
-            cy.get('td').eq(1).contains('mimibox@gmail.com');
-            cy.get('td').eq(2).contains('················');
+            cy.get('td').eq(0).contains(/^Gmail$/);
+            cy.get('td').eq(1).contains(/^mimibox@gmail.com$/);
+            cy.get('td').eq(2).contains(/^················$/);
         });
 
+        /**
+         * Use email account password
+         */
         cy.on('window:alert', cy.stub().as('alert'));
         cy.get('#first-copy-password-button').click();
         cy.get('@alert').should('have.been.calledWith', `Gmail password copied. Clipboard will be cleared in 0.1 seconds.`)
@@ -46,10 +52,24 @@ describe('Mimibox', () => {
         .invoke('readText')
         .should('equal', 'guitar45Conjured51noted')
 
+        /**
+         * Verify clipboard timeout
+         */
         cy.wait(200);
-
         cy.window().its('navigator.clipboard')
         .invoke('readText')
         .should('equal', '')
+
+        /**
+         * Show password
+         */
+         cy.get('#show-hide-passwords').click();
+         cy.get('#entries tr').eq(1).get('td').eq(2).contains(/^guitar45Conjured51noted$/);
+
+         /**
+         * Hide password
+         */
+          cy.get('#show-hide-passwords').click();
+          cy.get('#entries tr').eq(1).get('td').eq(2).contains(/^················$/);
     })
 })
