@@ -56,6 +56,7 @@ const updateUi = filterText => {
   }
 
   let taggedFirstPasswordButton = false;
+  let taggedFirstDeleteButton = false;
 
   const headerUi = document.createElement('tr');
   const headerAccountUi = document.createElement('th');
@@ -130,6 +131,10 @@ const updateUi = filterText => {
       mimibox.entries = nextEntries;
       updateUi();
     };
+    if (!taggedFirstDeleteButton) {
+      deleteButton.id = 'first-delete-password-button';
+      taggedFirstDeleteButton = true;
+    }
 
     const deleteTooltip = document.createElement("span");
     deleteTooltip.classList.add("tooltip");
