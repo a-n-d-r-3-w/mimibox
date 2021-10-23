@@ -7,7 +7,7 @@
 
 describe('Mimibox', () => {
     it('Initial state', () => {
-        cy.visit('./index.html')
+        cy.visit('index.html');
 
         cy.get('#entries tr').should('have.length', 3);
         cy.get('#entries tr').eq(0)
@@ -19,7 +19,7 @@ describe('Mimibox', () => {
     })
 
     it('Add entry', () => {
-        cy.visit('./index.html')
+        cy.visit('index.html?clipboardTimeoutInMilliseconds=100')
 
         cy.get('#new-entry-account').type('Gmail');
         cy.get('#new-entry-username').type('mimibox@gmail.com');
@@ -40,13 +40,13 @@ describe('Mimibox', () => {
 
         cy.on('window:alert', cy.stub().as('alert'));
         cy.get('#first-copy-password-button').click();
-        cy.get('@alert').should('have.been.calledWith', `Gmail password copied. Clipboard will be cleared in 20 seconds.`)
+        cy.get('@alert').should('have.been.calledWith', `Gmail password copied. Clipboard will be cleared in 0.1 seconds.`)
 
         cy.window().its('navigator.clipboard')
         .invoke('readText')
         .should('equal', 'guitar45Conjured51noted')
 
-        cy.wait(20000);
+        cy.wait(200);
 
         cy.window().its('navigator.clipboard')
         .invoke('readText')

@@ -1,5 +1,9 @@
 const ONE_MINUTE_IN_MS = 60000;
 const TWENTY_SECONDS_IN_MS = 20000;
+
+const params = (new URL(document.location)).searchParams;
+const clipboardTimeoutInMilliseconds = parseInt(params.get('clipboardTimeoutInMilliseconds')) || TWENTY_SECONDS_IN_MS;
+
 let minutesBeforeClear = 60;
 const timer = document.getElementById("timer");
 timer.textContent = minutesBeforeClear.toString();
@@ -86,10 +90,10 @@ const updateUi = filterText => {
     copyPasswordButton.classList.add("fa-copy");
     copyPasswordButton.onclick = () => {
       navigator.clipboard.writeText(password).finally(() => {
-        alert(`${name} password copied. Clipboard will be cleared in ${TWENTY_SECONDS_IN_MS / 1000} seconds.`);
+        alert(`${name} password copied. Clipboard will be cleared in ${clipboardTimeoutInMilliseconds / 1000} seconds.`);
         setTimeout(() => {
           navigator.clipboard.writeText("");
-        }, TWENTY_SECONDS_IN_MS);
+        }, clipboardTimeoutInMilliseconds);
       });
     };
 
