@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Mimibox</title>
-    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png"/>
-    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css"/>
-    <link rel="stylesheet" href="main.css"/>
+    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" />
+    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="main.css" />
     <script src="sjcl.js"></script>
 </head>
+
 <body>
 
-<h1>
-    Mimibox
-</h1>
+    <h1>
+        Mimibox
+    </h1>
 
-<i id="help" class="fas fa-question-circle"></i>
+    This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before
+    then.
 
-This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before then.
+    <div class="button-group">
+        <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
+    </div>
+    <input type="file" id="file">
 
-<div class="button-group">
-    <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
-</div>
-<input type="file" id="file">
+    <div class="grid">
+        <div>
+            <fieldset>
+                <legend>Load from file</legend>
+                <button class="rectangular-button" id="select-file">Select file...</button>
+                <br>
+                <label for="selected-file-path">Selected file:</label>
+                <input id="selected-file-path" type="text" disabled />
+                <br>
+                <label for="import-password">Import password:</label>
+                <input id="import-password" type="password" />
+                <br>
+                <button class="rectangular-button" id="import">Import</button>
+            </fieldset>
+        </div>
 
-<div class="grid">
-    <div>
-        <fieldset>
-            <legend>Load from file</legend>
-            <button class="rectangular-button" id="select-file">Select file...</button>
-            <br>
-            <label for="selected-file-path">Selected file:</label>
-            <input id="selected-file-path" type="text" disabled />
-            <br>
-            <label for="import-password">Import password:</label>
-            <input id="import-password" type="password"/>
-            <br>
-            <button class="rectangular-button" id="import">Import</button>
-        </fieldset>
+        <div>
+            <fieldset>
+                <legend>Save to file</legend>
+                <label for="export-password">Export password:</label>
+                <input id="export-password" type="password" />
+                <br>
+                <label for="confirm-export-password">Confirm password:</label>
+                <input id="confirm-export-password" type="password" />
+                <br>
+                <button class="rectangular-button" id="export">Save...</button>
+            </fieldset>
+        </div>
     </div>
 
-    <div>
-        <fieldset>
-            <legend>Save to file</legend>
-            <label for="export-password">Export password:</label>
-            <input id="export-password" type="password"/>
-            <br>
-            <label for="confirm-export-password">Confirm password:</label>
-            <input id="confirm-export-password" type="password"/>
-            <br>
-            <button class="rectangular-button" id="export">Save...</button>
-        </fieldset>
+    <fieldset>
+        <legend>Add entry</legend>
+        <label for="new-entry-account">Account</label>
+        <input type="text" id="new-entry-account">
+        <label for="new-entry-username">Username</label>
+        <input type="text" id="new-entry-username">
+        <label for="new-entry-password">Password</label>
+        <input type="password" id="new-entry-password">
+        <button id="add" class="rectangular-button">Add</button>
+    </fieldset>
+
+    <div id="filter">
+        <label for="filter-input">Filter accounts</label>
+        <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
     </div>
-</div>
 
-<fieldset>
-    <legend>Add entry</legend>
-    <label for="new-entry-account">Account</label>
-    <input type="text" id="new-entry-account">
-    <label for="new-entry-username">Username</label>
-    <input type="text" id="new-entry-username">
-    <label for="new-entry-password">Password</label>
-    <input type="password" id="new-entry-password">
-    <button id="add" class="rectangular-button">Add</button>
-</fieldset>
+    <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
 
-<div id="filter">
-    <label for="filter-input">Filter accounts</label>
-    <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
-</div>
+    <table id="entries"></table>
 
-<button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
-
-<table id="entries"></table>
-
-<script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
+
 </html>
