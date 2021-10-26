@@ -104,4 +104,14 @@ describe('Mimibox', () => {
         cy.get('#filter-input').should('be.empty');
         cy.get('#entries tr').should('have.length', 3);
     })
+
+    it('Import file', () => {
+        cy.visit('index.html');
+        cy.get('#entries tr').should('have.length', 3);
+
+        cy.get('#file').attachFile('test.dat');
+
+        cy.get('#import-password').type('test{enter}');
+        cy.get('#entries tr').should('have.length', 7);
+    })
 })
