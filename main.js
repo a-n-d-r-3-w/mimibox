@@ -96,17 +96,17 @@ const updateUi = filterText => {
         }, clipboardTimeoutInMilliseconds);
       });
     };
-
     if (!taggedFirstPasswordButton) {
       copyPasswordButton.id = 'first-copy-password-button';
       taggedFirstPasswordButton = true;
     }
+    const copyPasswordButtonContainer = document.createElement("td");
+    copyPasswordButtonContainer.appendChild(copyPasswordButton);
 
     const passwordUiText = document.createElement("span");
     passwordUiText.textContent = showPasswords ? password : '················';
 
     const passwordUi = document.createElement("td");
-    passwordUi.appendChild(copyPasswordButton);
     passwordUi.appendChild(passwordUiText);
 
     const deleteButton = document.createElement("button");
@@ -135,6 +135,7 @@ const updateUi = filterText => {
     entryUi.appendChild(accountUi);
     entryUi.appendChild(usernameUi);
     entryUi.appendChild(passwordUi);
+    entryUi.appendChild(copyPasswordButtonContainer);
     entryUi.appendChild(deleteButtonContainer);
 
     entriesUi.appendChild(entryUi);
