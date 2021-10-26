@@ -6,6 +6,8 @@
 body {
     padding: 0 5rem;
     font-family: "Lato Light", sans-serif;
+    max-width: 50em;
+    margin: auto;
 }
 
 body.dark {
