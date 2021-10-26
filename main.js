@@ -85,9 +85,8 @@ const updateUi = filterText => {
     const usernameUi = document.createElement("td");
     usernameUi.textContent = username;
 
-    const copyPasswordButton = document.createElement("i");
-    copyPasswordButton.classList.add("fas");
-    copyPasswordButton.classList.add("fa-copy");
+    const copyPasswordButton = document.createElement("button");
+    copyPasswordButton.textContent = 'Copy';
     copyPasswordButton.onclick = () => {
       navigator.clipboard.writeText(password).finally(() => {
         alert(`${name} password copied. Clipboard will be cleared in ${clipboardTimeoutInMilliseconds / 1000} seconds.`);
@@ -102,14 +101,6 @@ const updateUi = filterText => {
       taggedFirstPasswordButton = true;
     }
 
-    const copyPasswordTooltip = document.createElement("span");
-    copyPasswordTooltip.classList.add("tooltip");
-    copyPasswordTooltip.textContent = "Copy password";
-    copyPasswordTooltip.style.width = "8em";
-    copyPasswordTooltip.style.left = "-3.5em";
-
-    copyPasswordButton.appendChild(copyPasswordTooltip);
-
     const passwordUiText = document.createElement("span");
     passwordUiText.textContent = showPasswords ? password : '················';
 
@@ -117,9 +108,8 @@ const updateUi = filterText => {
     passwordUi.appendChild(copyPasswordButton);
     passwordUi.appendChild(passwordUiText);
 
-    const deleteButton = document.createElement("i");
-    deleteButton.classList.add("fas");
-    deleteButton.classList.add("fa-trash");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
     deleteButton.onclick = () => {
       let isUserSure = confirm("Are you sure?");
       if (!isUserSure) {
@@ -134,13 +124,6 @@ const updateUi = filterText => {
       deleteButton.id = 'first-delete-password-button';
       taggedFirstDeleteButton = true;
     }
-
-    const deleteTooltip = document.createElement("span");
-    deleteTooltip.classList.add("tooltip");
-    deleteTooltip.textContent = "Delete";
-    deleteTooltip.style.width = "4em";
-    deleteTooltip.style.left = "-1.5em";
-    deleteButton.appendChild(deleteTooltip);
 
     const deleteButtonContainer = document.createElement("td");
     deleteButtonContainer.appendChild(deleteButton);
