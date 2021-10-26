@@ -20,7 +20,7 @@
   "homepage": "https://github.com/a-n-d-r-3-w/mimibox#readme",
   "dependencies": {},
   "devDependencies": {
-    "cypress": "^8.6.0",
+    "cypress": "^8.7.0",
     "cypress-file-upload": "^5.0.8",
     "husky": "^7.0.0"
   }

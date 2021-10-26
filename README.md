@@ -1,4 +1,7 @@
 # Mimibox
+
+[![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
+
 ### Problem statement
 *[Halberdier](https://github.com/a-n-d-r-3-w/halberdier)* is a local (offline) password manager for Mac based on ElectronJS. The functionality is small in scope, yet the packaged .APP file is larger than 100 MB, and unless I pay Apple $100 every year to distribute the app via their app store, Mac users see an "unidentified developer" warning when trying to launch the app.
 
