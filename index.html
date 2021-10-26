@@ -19,11 +19,39 @@
 This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before then.
 
 <div class="button-group">
-    <button class="rectangular-button" id="import">Load from file</button>
-    <button class="rectangular-button" id="export">Save to file</button>
     <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
 </div>
 <input type="file" id="file">
+
+<div class="grid">
+    <div>
+        <fieldset>
+            <legend>Load from file</legend>
+            <button class="rectangular-button" id="select-file">Select file...</button>
+            <br>
+            <label for="selected-file-path">Selected file:</label>
+            <input id="selected-file-path" type="text" disabled />
+            <br>
+            <label for="import-password">Import password:</label>
+            <input id="import-password" type="password"/>
+            <br>
+            <button class="rectangular-button" id="import">Import</button>
+        </fieldset>
+    </div>
+
+    <div>
+        <fieldset>
+            <legend>Save to file</legend>
+            <label for="export-password">Export password:</label>
+            <input id="export-password" type="password"/>
+            <br>
+            <label for="confirm-export-password">Confirm password:</label>
+            <input id="confirm-export-password" type="password"/>
+            <br>
+            <button class="rectangular-button" id="export">Save</button>
+        </fieldset>
+    </div>
+</div>
 
 <fieldset>
     <legend>Add entry</legend>
@@ -44,21 +72,6 @@ This page will reset in <span id="timer"></span> minutes to protect your data. P
 <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
 
 <table id="entries"></table>
-
-<dialog id="import-password-dialog">
-    <label for="import-password">Enter import password:</label>
-    <input id="import-password" type="password"/>
-</dialog>
-
-<dialog id="export-password-dialog">
-    <label for="export-password">Enter export password:</label>
-    <input id="export-password" type="password"/>
-</dialog>
-
-<dialog id="confirm-export-password-dialog">
-    <label for="confirm-export-password">Confirm export password:</label>
-    <input id="confirm-export-password" type="password"/>
-</dialog>
 
 <script src="main.js"></script>
 </body>

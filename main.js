@@ -19,15 +19,14 @@ let showPasswords = false;
 let selectedFile = null;
 let exportPassword = null;
 
+const selectFileButton = document.getElementById("select-file");
+const selectedFilePath = document.getElementById("selected-file-path");
 const importButton = document.getElementById("import");
 const fileInput = document.getElementById("file");
-const importPasswordDialog = document.getElementById("import-password-dialog");
 const importPasswordInput = document.getElementById("import-password");
 
 const exportButton = document.getElementById("export");
-const exportPasswordDialog = document.getElementById("export-password-dialog");
 const exportPasswordInput = document.getElementById("export-password");
-const confirmExportPasswordDialog = document.getElementById("confirm-export-password-dialog");
 const confirmExportPasswordInput = document.getElementById("confirm-export-password");
 
 const newEntryAccountInput = document.getElementById("new-entry-account");
@@ -41,8 +40,8 @@ const entriesUi = document.getElementById("entries");
 
 const mimibox = {
   entries: [
-    {id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#'},
-    {id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK'}
+    { id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#' },
+    { id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK' }
   ],
 };
 
@@ -74,7 +73,7 @@ const updateUi = filterText => {
 
   for (let i = 0; i < mimibox.entries.length; i++) {
     const entry = mimibox.entries[i];
-    const {id, name, username, password} = entry;
+    const { id, name, username, password } = entry;
 
     if (filterText && name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       continue;
@@ -188,7 +187,7 @@ newEntryPasswordInput.onkeydown = e => {
 };
 
 function download(data, filename, type) {
-  const file = new Blob([data], {type: type});
+  const file = new Blob([data], { type: type });
   if (window.navigator.msSaveOrOpenBlob) // IE10+
     window.navigator.msSaveOrOpenBlob(file, filename);
   else { // Others
@@ -211,16 +210,49 @@ fileInput.onchange = () => {
     return;
   }
   fileInput.value = '';
-  importPasswordDialog.showModal();
+  selectedFilePath.value = selectedFile.name;
 };
+
+selectFileButton.onclick = () => {
+  fileInput.click();
+}
+selectFileButton.focus();
 
 importButton.onclick = () => {
-  fileInput.click();
+  const importPassword = importPasswordInput.value;
+  importPasswordInput.value = '';
+  const reader = new FileReader();
+  reader.onload = event => {
+    const encrypted = event.target.result;
+    let decrypted;
+    try {
+      decrypted = sjcl.decrypt(importPassword, encrypted);
+    } catch (error) {
+      alert('Incorrect password');
+      importPasswordInput.focus();
+      return;
+    }
+    const entries = JSON.parse(decrypted);
+    mimibox.entries = entries;
+    updateUi();
+    filterInput.focus();
+  };
+  reader.readAsText(selectedFile);
 };
-importButton.focus();
 
 exportButton.onclick = () => {
-  exportPasswordDialog.showModal();
+  const exportPassword = exportPasswordInput.value;
+  const confirmExportPassword = confirmExportPasswordInput.value;
+  exportPasswordInput.value = '';
+  confirmExportPasswordInput.value = '';
+  if (confirmExportPassword !== exportPassword) {
+    alert('Passwords do not match');
+    exportPasswordInput.focus();
+    return;
+  }
+  const entriesAsString = JSON.stringify(mimibox.entries);
+  const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
+  download(encrypted, "mimibox.dat", 'text/plain');
 };
 
 showHidePasswordButton.onclick = () => {
@@ -240,78 +272,6 @@ filterInput.onkeydown = e => {
   }
   if (e.keyCode === ESCAPE_KEY) {
     e.target.value = '';
-  }
-};
-
-importPasswordInput.onkeydown = e => {
-  if (e.keyCode === ENTER_KEY && e.target.value) {
-    const importPassword = e.target.value;
-    e.target.value = '';
-    const reader = new FileReader();
-    reader.onload = event => {
-      const encrypted = event.target.result;
-      let decrypted;
-      try {
-        decrypted = sjcl.decrypt(importPassword, encrypted);
-      } catch (error) {
-        alert('Incorrect password');
-        importPasswordDialog.close();
-        importButton.focus();
-        return;
-      }
-      const entries = JSON.parse(decrypted);
-      mimibox.entries = entries;
-      updateUi();
-      importPasswordDialog.close();
-      filterInput.focus();
-    };
-    reader.readAsText(selectedFile);
-  }
-  if (e.keyCode === ESCAPE_KEY) {
-    e.target.value = '';
-    importPasswordDialog.close();
-    importButton.focus();
-  }
-};
-
-exportPasswordInput.onkeydown = e => {
-  if (e.keyCode === ENTER_KEY && e.target.value) {
-    exportPassword = e.target.value;
-    e.target.value = '';
-    exportPasswordDialog.close();
-    confirmExportPasswordDialog.showModal();
-  }
-  if (e.keyCode === ESCAPE_KEY) {
-    e.target.value = '';
-    exportPassword = null;
-    exportPasswordDialog.close();
-    exportButton.focus();
-  }
-};
-
-confirmExportPasswordInput.onkeydown = e => {
-  if (e.keyCode === ENTER_KEY && e.target.value) {
-    const confirmExportPassword = e.target.value;
-    e.target.value = '';
-    if (confirmExportPassword !== exportPassword) {
-      exportPassword = null;
-      confirmExportPasswordDialog.close();
-      alert('Passwords do not match');
-      setTimeout(() => {
-        exportButton.focus();
-      }, 100); // Delay required before focus(), or else the export-password-dialog is opened again.
-      return;
-    }
-    const entriesAsString = JSON.stringify(mimibox.entries);
-    const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
-    download(encrypted, "mimibox.dat", 'text/plain');
-    confirmExportPasswordDialog.close();
-  }
-  if (e.keyCode === ESCAPE_KEY) {
-    e.target.value = '';
-    exportPassword = null;
-    confirmExportPasswordDialog.close();
-    exportButton.focus();
   }
 };
 
