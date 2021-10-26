@@ -87,6 +87,7 @@ const updateUi = filterText => {
 
     const copyPasswordButton = document.createElement("button");
     copyPasswordButton.textContent = 'Copy';
+    copyPasswordButton.classList.add('rectangular-button');
     copyPasswordButton.onclick = () => {
       navigator.clipboard.writeText(password).finally(() => {
         alert(`${name} password copied. Clipboard will be cleared in ${clipboardTimeoutInMilliseconds / 1000} seconds.`);
@@ -110,6 +111,7 @@ const updateUi = filterText => {
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
+    deleteButton.classList.add("rectangular-button");
     deleteButton.onclick = () => {
       let isUserSure = confirm("Are you sure?");
       if (!isUserSure) {
