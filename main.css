@@ -24,8 +24,7 @@ img {
 fieldset {
     border: 1px solid gray;
     border-radius: 0.8rem;
-    margin: 1rem 0;
-    padding: 1rem 1.2rem 1.5rem 1.2rem;
+    margin: 0.5rem 0;
 }
 
 legend {
@@ -35,7 +34,8 @@ legend {
 }
 
 input {
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
+    margin: 0.25rem 1rem 0.25rem 0;
 }
 
 .rectangular-button {
@@ -43,6 +43,7 @@ input {
     border-radius: 0.25rem;
     line-height: 1.25rem;
     padding: 0 0.75rem;
+    margin: 0.25rem 0;
 }
 
 .rectangular-button:hover {
@@ -103,7 +104,7 @@ td {
 }
 
 .button-group {
-    margin: 1rem;
+    margin: 0.5rem;
 }
 
 #file {

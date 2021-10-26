@@ -211,6 +211,7 @@ fileInput.onchange = () => {
   }
   fileInput.value = '';
   selectedFilePath.value = selectedFile.name;
+  importPasswordInput.focus();
 };
 
 selectFileButton.onclick = () => {
