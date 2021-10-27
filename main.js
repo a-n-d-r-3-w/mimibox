@@ -27,10 +27,11 @@ const importPasswordInput = document.getElementById("import-password");
 const importPasswordModal = document.getElementById("import-password-modal");
 
 const exportButton = document.getElementById("export");
-const exportPasswordDialog = document.getElementById("export-password-dialog");
+const saveModal = document.getElementById("save-modal");
 const exportPasswordInput = document.getElementById("export-password");
-const confirmExportPasswordDialog = document.getElementById("confirm-export-password-dialog");
 const confirmExportPasswordInput = document.getElementById("confirm-export-password");
+const passwordsDoNotMatchError = document.getElementById("passwords-do-not-match-error");
+const saveButton = document.getElementById("save")
 
 const newEntryAccountInput = document.getElementById("new-entry-account");
 const newEntryUsernameInput = document.getElementById("new-entry-username");
@@ -43,8 +44,8 @@ const entriesUi = document.getElementById("entries");
 
 const mimibox = {
   entries: [
-    {id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#'},
-    {id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK'}
+    { id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#' },
+    { id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK' }
   ],
 };
 
@@ -76,7 +77,7 @@ const updateUi = filterText => {
 
   for (let i = 0; i < mimibox.entries.length; i++) {
     const entry = mimibox.entries[i];
-    const {id, name, username, password} = entry;
+    const { id, name, username, password } = entry;
 
     if (filterText && name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       continue;
@@ -190,7 +191,7 @@ newEntryPasswordInput.onkeydown = e => {
 };
 
 function download(data, filename, type) {
-  const file = new Blob([data], {type: type});
+  const file = new Blob([data], { type: type });
   if (window.navigator.msSaveOrOpenBlob) // IE10+
     window.navigator.msSaveOrOpenBlob(file, filename);
   else { // Others
@@ -224,7 +225,9 @@ importButton.onclick = () => {
 importButton.focus();
 
 exportButton.onclick = () => {
-  exportPasswordDialog.showModal();
+  saveModal.style.display = 'block';
+  overlay.style.display = 'block';
+  exportPasswordInput.focus();
 };
 
 showHidePasswordButton.onclick = () => {
@@ -281,46 +284,27 @@ importPasswordInput.onkeydown = e => {
   }
 };
 
-exportPasswordInput.onkeydown = e => {
-  if (e.keyCode === ENTER_KEY && e.target.value) {
-    exportPassword = e.target.value;
-    e.target.value = '';
-    exportPasswordDialog.close();
-    confirmExportPasswordDialog.showModal();
+confirmExportPasswordInput.onkeyup = e => {
+  const confirmPassword = e.target.value;
+  if ((confirmPassword.length > 0) && (confirmPassword === exportPasswordInput.value)) {
+    passwordsDoNotMatchError.style.display = 'none';
+    saveButton.disabled = false;
+    return;
   }
-  if (e.keyCode === ESCAPE_KEY) {
-    e.target.value = '';
-    exportPassword = null;
-    exportPasswordDialog.close();
-    exportButton.focus();
-  }
-};
+  saveButton.disabled = true;
+  passwordsDoNotMatchError.style.display = 'block';
+}
 
-confirmExportPasswordInput.onkeydown = e => {
-  if (e.keyCode === ENTER_KEY && e.target.value) {
-    const confirmExportPassword = e.target.value;
-    e.target.value = '';
-    if (confirmExportPassword !== exportPassword) {
-      exportPassword = null;
-      confirmExportPasswordDialog.close();
-      alert('Passwords do not match');
-      setTimeout(() => {
-        exportButton.focus();
-      }, 100); // Delay required before focus(), or else the export-password-dialog is opened again.
-      return;
-    }
-    const entriesAsString = JSON.stringify(mimibox.entries);
-    const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
-    download(encrypted, "mimibox.dat", 'text/plain');
-    confirmExportPasswordDialog.close();
-  }
-  if (e.keyCode === ESCAPE_KEY) {
-    e.target.value = '';
-    exportPassword = null;
-    confirmExportPasswordDialog.close();
-    exportButton.focus();
-  }
-};
+saveButton.onclick = () => {
+  const exportPassword = exportPasswordInput.value;
+  const entriesAsString = JSON.stringify(mimibox.entries);
+  const encrypted = sjcl.encrypt(exportPassword, entriesAsString);
+  download(encrypted, "mimibox.dat", 'text/plain');
+  exportPasswordInput.value = '';
+  confirmExportPasswordInput.value = '';
+  saveModal.style.display = 'none';
+  overlay.style.display = 'none';
+}
 
 const body = document.getElementsByTagName("body")[0];
 const DARK_THEME_CSS_CLASS = "dark";
@@ -336,19 +320,27 @@ if (localStorage.getItem(DARK_THEME_LOCAL_STORAGE_KEY) === 'true') {
   document.getElementsByTagName("body")[0].classList.add(DARK_THEME_CSS_CLASS);
 }
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+const importPasswordModalCloseButton = document.getElementById("import-password-modal-close");
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+importPasswordModalCloseButton.onclick = function () {
   importPasswordModal.style.display = "none";
   overlay.style.display = 'none';
 }
 
+const saveModalCloseButton = document.getElementById("save-modal-close");
+saveModalCloseButton.onclick = () => {
+  saveModal.style.display = 'none';
+  overlay.style.display = 'none';
+}
+
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == importPasswordModal) {
     importPasswordModal.style.display = "none";
     overlay.style.display = 'none';
   }
-} 
+  if (event.target == saveModal) {
+    saveModal.style.display = "none";
+    overlay.style.display = 'none';
+  }
+}

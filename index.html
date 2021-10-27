@@ -14,13 +14,36 @@
 
     <div id="import-password-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span id="import-password-modal-close" class="close">&times;</span>
             <p>
                 <label for="import-password">Enter import password:</label>
                 <input id="import-password" type="password" />
             </p>
         </div>
     </div>
+
+    <div id="save-modal" class="modal">
+        <div class="modal-content">
+            <span id="save-modal-close" class="close">&times;</span>
+            <p>
+                <div>
+                    <label for="export-password">Enter export password:</label>
+                    <input id="export-password" type="password" />
+                </div>
+                <div>
+                    <label for="confirm-export-password">Confirm export password:</label>
+                    <input id="confirm-export-password" type="password" />
+                </div>
+                <div id='passwords-do-not-match-error'>
+                    Passwords do not match.
+                </div>
+                <div>
+                    <button class="rectangular-button" id="save" disabled>Save</button>
+                </div>
+            </p>
+        </div>
+    </div>
+
     <div id="overlay"></div>
 
     <h1>
@@ -58,16 +81,6 @@
     <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
 
     <table id="entries"></table>
-
-    <dialog id="export-password-dialog">
-        <label for="export-password">Enter export password:</label>
-        <input id="export-password" type="password" />
-    </dialog>
-
-    <dialog id="confirm-export-password-dialog">
-        <label for="confirm-export-password">Confirm export password:</label>
-        <input id="confirm-export-password" type="password" />
-    </dialog>
 
     <script src="main.js"></script>
 </body>
