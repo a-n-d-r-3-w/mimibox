@@ -31,6 +31,8 @@ const confirmExportPasswordInput = document.getElementById("confirm-export-passw
 const passwordsDoNotMatchError = document.getElementById("passwords-do-not-match-error");
 const saveButton = document.getElementById("save")
 
+const addSecretButton = document.getElementById("add-secret");
+const addSecretModal = document.getElementById("add-secret-modal");
 const newEntryAccountInput = document.getElementById("new-entry-account");
 const newEntryUsernameInput = document.getElementById("new-entry-username");
 const newEntryPasswordInput = document.getElementById("new-entry-password");
@@ -160,6 +162,11 @@ const updateUi = filterText => {
 
 updateUi();
 
+addSecretButton.onclick = () => {
+  addSecretModal.style.display = 'block';
+  newEntryAccountInput.focus();
+}
+
 addButton.onclick = () => {
   const account = newEntryAccountInput.value;
   const username = newEntryUsernameInput.value;
@@ -178,14 +185,8 @@ addButton.onclick = () => {
   newEntryAccountInput.value = '';
   newEntryUsernameInput.value = '';
   newEntryPasswordInput.value = '';
-  newEntryAccountInput.focus();
-};
-
-newEntryPasswordInput.onkeydown = e => {
-  if (e.keyCode !== ENTER_KEY) {
-    return;
-  }
-  addButton.click();
+  addSecretModal.style.display = 'none';
+  addSecretButton.focus();
 };
 
 function download(data, filename, type) {
@@ -325,6 +326,14 @@ saveModalCloseButton.onclick = () => {
   confirmExportPasswordInput.value = '';
 }
 
+const addSecretModalCloseButton = document.getElementById("add-secret-modal-close");
+addSecretModalCloseButton.onclick = () => {
+  addSecretModal.style.display = 'none';
+  newEntryAccountInput.value = '';
+  newEntryUsernameInput.value = '';
+  newEntryPasswordInput.value = '';
+}
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == importPasswordModal) {
@@ -335,5 +344,11 @@ window.onclick = function (event) {
     saveModal.style.display = "none";
     exportPasswordInput.value = '';
     confirmExportPasswordInput.value = '';
+  }
+  if (event.target == addSecretModal) {
+    addSecretModal.style.display = 'none';
+    newEntryAccountInput.value = '';
+    newEntryUsernameInput.value = '';
+    newEntryPasswordInput.value = '';  
   }
 }

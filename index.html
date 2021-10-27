@@ -26,22 +26,40 @@
         <div class="modal-content">
             <span id="save-modal-close" class="close">&times;</span>
             <p>
-                <div>
-                    <label for="export-password">Enter export password:</label>
-                    <input id="export-password" type="password" />
-                </div>
+            <div>
+                <label for="export-password">Enter export password:</label>
+                <input id="export-password" type="password" />
+            </div>
+            <br>
+            <div>
+                <label for="confirm-export-password">Confirm export password:</label>
+                <input id="confirm-export-password" type="password" />
+            </div>
+            <div id='passwords-do-not-match-error'>
+                Passwords do not match.
+            </div>
+            <br>
+            <div>
+                <button class="rectangular-button" id="save" disabled>Save to file</button>
+            </div>
+            </p>
+        </div>
+    </div>
+
+    <div id="add-secret-modal" class="modal">
+        <div class="modal-content">
+            <span id="add-secret-modal-close" class="close">&times;</span>
+            <p>
+                <label for="new-entry-account">Account</label>
+                <input type="text" id="new-entry-account">
                 <br>
-                <div>
-                    <label for="confirm-export-password">Confirm export password:</label>
-                    <input id="confirm-export-password" type="password" />
-                </div>
-                <div id='passwords-do-not-match-error'>
-                    Passwords do not match.
-                </div>
+                <label for="new-entry-username">Username</label>
+                <input type="text" id="new-entry-username">
                 <br>
-                <div>
-                    <button class="rectangular-button" id="save" disabled>Save to file</button>
-                </div>
+                <label for="new-entry-password">Password</label>
+                <input type="password" id="new-entry-password">
+                <br>
+                <button id="add" class="rectangular-button">Add</button>
             </p>
         </div>
     </div>
@@ -62,23 +80,16 @@
     </div>
     <input type="file" id="file">
 
-    <fieldset>
-        <legend>Add entry</legend>
-        <label for="new-entry-account">Account</label>
-        <input type="text" id="new-entry-account">
-        <label for="new-entry-username">Username</label>
-        <input type="text" id="new-entry-username">
-        <label for="new-entry-password">Password</label>
-        <input type="password" id="new-entry-password">
-        <button id="add" class="rectangular-button">Add</button>
-    </fieldset>
-
     <div id="filter">
         <label for="filter-input">Filter accounts</label>
         <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
     </div>
 
-    <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
+
+    <div class="button-group">
+        <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
+        <button class="rectangular-button" id="add-secret">Add secret</button>
+    </div>
 
     <table id="entries"></table>
 
