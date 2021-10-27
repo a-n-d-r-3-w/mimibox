@@ -19,8 +19,6 @@ let showPasswords = false;
 let selectedFile = null;
 let exportPassword = null;
 
-const overlay = document.getElementById("overlay");
-
 const importButton = document.getElementById("import");
 const fileInput = document.getElementById("file");
 const importPasswordInput = document.getElementById("import-password");
@@ -214,7 +212,6 @@ fileInput.onchange = () => {
     return;
   }
   fileInput.value = '';
-  overlay.style.display = 'block';
   importPasswordModal.style.display = 'block';
   importPasswordInput.focus();
 };
@@ -226,7 +223,6 @@ importButton.focus();
 
 exportButton.onclick = () => {
   saveModal.style.display = 'block';
-  overlay.style.display = 'block';
   exportPasswordInput.focus();
 };
 
@@ -263,7 +259,6 @@ importPasswordInput.onkeydown = e => {
       } catch (error) {
         alert('Incorrect password');
         importPasswordModal.style.display = 'none';
-        overlay.style.display = 'none';
         importButton.focus();
         return;
       }
@@ -271,7 +266,6 @@ importPasswordInput.onkeydown = e => {
       mimibox.entries = entries;
       updateUi();
       importPasswordModal.style.display = 'none';
-      overlay.style.display = 'none';
       filterInput.focus();
     };
     reader.readAsText(selectedFile);
@@ -279,7 +273,6 @@ importPasswordInput.onkeydown = e => {
   if (e.keyCode === ESCAPE_KEY) {
     e.target.value = '';
     importPasswordModal.style.display = 'none';
-    overlay.style.display = 'none';
     importButton.focus();
   }
 };
@@ -303,7 +296,6 @@ saveButton.onclick = () => {
   exportPasswordInput.value = '';
   confirmExportPasswordInput.value = '';
   saveModal.style.display = 'none';
-  overlay.style.display = 'none';
 }
 
 const body = document.getElementsByTagName("body")[0];
@@ -324,23 +316,19 @@ const importPasswordModalCloseButton = document.getElementById("import-password-
 
 importPasswordModalCloseButton.onclick = function () {
   importPasswordModal.style.display = "none";
-  overlay.style.display = 'none';
 }
 
 const saveModalCloseButton = document.getElementById("save-modal-close");
 saveModalCloseButton.onclick = () => {
   saveModal.style.display = 'none';
-  overlay.style.display = 'none';
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == importPasswordModal) {
     importPasswordModal.style.display = "none";
-    overlay.style.display = 'none';
   }
   if (event.target == saveModal) {
     saveModal.style.display = "none";
-    overlay.style.display = 'none';
   }
 }
