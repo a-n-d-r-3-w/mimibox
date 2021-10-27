@@ -147,15 +147,18 @@ td {
     background-color: #fefefe;
     margin: 15% auto;
     /* 15% from the top and centered */
-    padding: 20px;
+    padding: 1rem;
     border: 1px solid #888;
     width: 20rem;
+    position: relative;
 }
 
 .modal-content .close {
     color: #aaa;
-    float: right;
-    font-size: 28px;
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    font-size: 1.75rem;
     font-weight: bold;
 }
 
