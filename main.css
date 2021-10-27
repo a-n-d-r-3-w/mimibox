@@ -52,7 +52,8 @@ input {
 i {
     color: gray;
     margin: 0 0.5rem;
-    position: relative; /* To position child tooltip element */
+    position: relative;
+    /* To position child tooltip element */
 }
 
 i .tooltip {
@@ -115,5 +116,59 @@ td {
     top: 1rem;
     right: 0.5rem;
     font-size: 1.5rem;
-    display: none; /* TODO: Help button is not yet implemented. */
+    display: none;
+    /* TODO: Help button is not yet implemented. */
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 2;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 1rem;
+    border: 1px solid #888;
+    width: 30rem;
+    position: relative;
+}
+
+.modal-content .close {
+    color: #aaa;
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.modal-content .close:hover, .modal-content .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#passwords-do-not-match-error {
+    display: none;
+    color: red;
 }

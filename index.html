@@ -1,65 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Mimibox</title>
-    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png"/>
-    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css"/>
-    <link rel="stylesheet" href="main.css"/>
+    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" />
+    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="main.css" />
     <script src="sjcl.js"></script>
 </head>
+
 <body>
 
-<h1>
-    Mimibox
-</h1>
+    <div id="import-password-modal" class="modal">
+        <div class="modal-content">
+            <span id="import-password-modal-close" class="close">&times;</span>
+            <p>
+                <label for="import-password">Enter password:</label>
+                <input id="import-password" type="password" />
+            </p>
+        </div>
+    </div>
 
-<i id="help" class="fas fa-question-circle"></i>
+    <div id="save-modal" class="modal">
+        <div class="modal-content">
+            <span id="save-modal-close" class="close">&times;</span>
+            <p>
+            <div>
+                <label for="export-password">Enter export password:</label>
+                <input id="export-password" type="password" />
+            </div>
+            <br>
+            <div>
+                <label for="confirm-export-password">Confirm export password:</label>
+                <input id="confirm-export-password" type="password" />
+            </div>
+            <div id='passwords-do-not-match-error'>
+                Passwords do not match.
+            </div>
+            <br>
+            <div>
+                <button class="rectangular-button" id="save" disabled>Save to file</button>
+            </div>
+            </p>
+        </div>
+    </div>
 
-This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before then.
+    <div id="add-secret-modal" class="modal">
+        <div class="modal-content">
+            <span id="add-secret-modal-close" class="close">&times;</span>
+            <p>
+                <label for="new-entry-account">Account</label>
+                <input type="text" id="new-entry-account">
+                <br>
+                <label for="new-entry-username">Username</label>
+                <input type="text" id="new-entry-username">
+                <br>
+                <label for="new-entry-password">Password</label>
+                <input type="password" id="new-entry-password">
+                <br>
+                <button id="add" class="rectangular-button">Add</button>
+            </p>
+        </div>
+    </div>
 
-<div class="button-group">
-    <button class="rectangular-button" id="import">Load from file</button>
-    <button class="rectangular-button" id="export">Save to file</button>
-    <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
-</div>
-<input type="file" id="file">
+    <h1>
+        Mimibox
+    </h1>
 
-<fieldset>
-    <legend>Add entry</legend>
-    <label for="new-entry-account">Account</label>
-    <input type="text" id="new-entry-account">
-    <label for="new-entry-username">Username</label>
-    <input type="text" id="new-entry-username">
-    <label for="new-entry-password">Password</label>
-    <input type="password" id="new-entry-password">
-    <button id="add" class="rectangular-button">Add</button>
-</fieldset>
+    <i id="help" class="fas fa-question-circle"></i>
 
-<div id="filter">
-    <label for="filter-input">Filter accounts</label>
-    <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
-</div>
+    This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before
+    then.
 
-<button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
+    <div class="button-group">
+        <button class="rectangular-button" id="import">Load from file</button>
+        <button class="rectangular-button" id="export">Save to file</button>
+        <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
+    </div>
+    <input type="file" id="file">
 
-<table id="entries"></table>
+    <div id="filter">
+        <label for="filter-input">Filter accounts</label>
+        <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
+    </div>
 
-<dialog id="import-password-dialog">
-    <label for="import-password">Enter import password:</label>
-    <input id="import-password" type="password"/>
-</dialog>
 
-<dialog id="export-password-dialog">
-    <label for="export-password">Enter export password:</label>
-    <input id="export-password" type="password"/>
-</dialog>
+    <div class="button-group">
+        <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
+        <button class="rectangular-button" id="add-secret">Add secret</button>
+    </div>
 
-<dialog id="confirm-export-password-dialog">
-    <label for="confirm-export-password">Confirm export password:</label>
-    <input id="confirm-export-password" type="password"/>
-</dialog>
+    <table id="entries"></table>
 
-<script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
+
 </html>
