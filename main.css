@@ -52,7 +52,8 @@ input {
 i {
     color: gray;
     margin: 0 0.5rem;
-    position: relative; /* To position child tooltip element */
+    position: relative;
+    /* To position child tooltip element */
 }
 
 i .tooltip {
@@ -115,5 +116,60 @@ td {
     top: 1rem;
     right: 0.5rem;
     font-size: 1.5rem;
-    display: none; /* TODO: Help button is not yet implemented. */
+    display: none;
+    /* TODO: Help button is not yet implemented. */
 }
+
+#overlay {
+    position: fixed;
+    display: none; /* Hidden by default */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: not-allowed; /* Add a pointer on hover */
+}
+
+ /* The Modal (background) */
+ .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  } 

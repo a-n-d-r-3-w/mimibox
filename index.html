@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Mimibox</title>
-    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png"/>
-    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css"/>
-    <link rel="stylesheet" href="main.css"/>
+    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" />
+    <link rel="stylesheet" href="fontawesome/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="main.css" />
     <script src="sjcl.js"></script>
 </head>
+
 <body>
 
-<h1>
-    Mimibox
-</h1>
+    <div id="import-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>
+                <label for="import-password">Enter import password:</label>
+                <input id="import-password" type="password" />
+            </p>
+        </div>
+    </div>
+    <div id="overlay"></div>
 
-<i id="help" class="fas fa-question-circle"></i>
+    <h1>
+        Mimibox
+    </h1>
 
-This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before then.
+    <i id="help" class="fas fa-question-circle"></i>
 
-<div class="button-group">
-    <button class="rectangular-button" id="import">Load from file</button>
-    <button class="rectangular-button" id="export">Save to file</button>
-    <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
-</div>
-<input type="file" id="file">
+    This page will reset in <span id="timer"></span> minutes to protect your data. Please export any changes before
+    then.
 
-<fieldset>
-    <legend>Add entry</legend>
-    <label for="new-entry-account">Account</label>
-    <input type="text" id="new-entry-account">
-    <label for="new-entry-username">Username</label>
-    <input type="text" id="new-entry-username">
-    <label for="new-entry-password">Password</label>
-    <input type="password" id="new-entry-password">
-    <button id="add" class="rectangular-button">Add</button>
-</fieldset>
+    <div class="button-group">
+        <button class="rectangular-button" id="import">Load from file</button>
+        <button class="rectangular-button" id="export">Save to file</button>
+        <button class="rectangular-button" id="light-dark-theme">Toggle light/dark theme</button>
+    </div>
+    <input type="file" id="file">
 
-<div id="filter">
-    <label for="filter-input">Filter accounts</label>
-    <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
-</div>
+    <fieldset>
+        <legend>Add entry</legend>
+        <label for="new-entry-account">Account</label>
+        <input type="text" id="new-entry-account">
+        <label for="new-entry-username">Username</label>
+        <input type="text" id="new-entry-username">
+        <label for="new-entry-password">Password</label>
+        <input type="password" id="new-entry-password">
+        <button id="add" class="rectangular-button">Add</button>
+    </fieldset>
 
-<button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
+    <div id="filter">
+        <label for="filter-input">Filter accounts</label>
+        <input type="text" id="filter-input" placeholder="ENTER copies first password; ESC clears filter">
+    </div>
 
-<table id="entries"></table>
+    <button class="rectangular-button" id="show-hide-passwords">Show/hide passwords</button>
 
-<dialog id="import-password-dialog">
-    <label for="import-password">Enter import password:</label>
-    <input id="import-password" type="password"/>
-</dialog>
+    <table id="entries"></table>
 
-<dialog id="export-password-dialog">
-    <label for="export-password">Enter export password:</label>
-    <input id="export-password" type="password"/>
-</dialog>
+    <dialog id="export-password-dialog">
+        <label for="export-password">Enter export password:</label>
+        <input id="export-password" type="password" />
+    </dialog>
 
-<dialog id="confirm-export-password-dialog">
-    <label for="confirm-export-password">Confirm export password:</label>
-    <input id="confirm-export-password" type="password"/>
-</dialog>
+    <dialog id="confirm-export-password-dialog">
+        <label for="confirm-export-password">Confirm export password:</label>
+        <input id="confirm-export-password" type="password" />
+    </dialog>
 
-<script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
+
 </html>

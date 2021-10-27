@@ -19,10 +19,12 @@ let showPasswords = false;
 let selectedFile = null;
 let exportPassword = null;
 
+const overlay = document.getElementById("overlay");
+
 const importButton = document.getElementById("import");
 const fileInput = document.getElementById("file");
-const importPasswordDialog = document.getElementById("import-password-dialog");
 const importPasswordInput = document.getElementById("import-password");
+const importPasswordModal = document.getElementById("import-password-modal");
 
 const exportButton = document.getElementById("export");
 const exportPasswordDialog = document.getElementById("export-password-dialog");
@@ -211,7 +213,9 @@ fileInput.onchange = () => {
     return;
   }
   fileInput.value = '';
-  importPasswordDialog.showModal();
+  overlay.style.display = 'block';
+  importPasswordModal.style.display = 'block';
+  importPasswordInput.focus();
 };
 
 importButton.onclick = () => {
@@ -255,21 +259,24 @@ importPasswordInput.onkeydown = e => {
         decrypted = sjcl.decrypt(importPassword, encrypted);
       } catch (error) {
         alert('Incorrect password');
-        importPasswordDialog.close();
+        importPasswordModal.style.display = 'none';
+        overlay.style.display = 'none';
         importButton.focus();
         return;
       }
       const entries = JSON.parse(decrypted);
       mimibox.entries = entries;
       updateUi();
-      importPasswordDialog.close();
+      importPasswordModal.style.display = 'none';
+      overlay.style.display = 'none';
       filterInput.focus();
     };
     reader.readAsText(selectedFile);
   }
   if (e.keyCode === ESCAPE_KEY) {
     e.target.value = '';
-    importPasswordDialog.close();
+    importPasswordModal.style.display = 'none';
+    overlay.style.display = 'none';
     importButton.focus();
   }
 };
@@ -328,3 +335,20 @@ lightDarkThemeButton.onclick = () => {
 if (localStorage.getItem(DARK_THEME_LOCAL_STORAGE_KEY) === 'true') {
   document.getElementsByTagName("body")[0].classList.add(DARK_THEME_CSS_CLASS);
 }
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  importPasswordModal.style.display = "none";
+  overlay.style.display = 'none';
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == importPasswordModal) {
+    importPasswordModal.style.display = "none";
+    overlay.style.display = 'none';
+  }
+} 
