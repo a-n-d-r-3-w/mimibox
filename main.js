@@ -44,8 +44,9 @@ const entriesUi = document.getElementById("entries");
 
 const mimibox = {
   entries: [
-    { id: '1342423423423', name: 'Example account #1', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#' },
-    { id: '3565634353453', name: 'Example account #2', username: 'wonderboom', password: 'BddhaXJK' }
+    { id: '1342423423423', name: 'Example 1: Netflix', username: 'eldrago', password: 'yV~@~%{a+9PS,+%#' },
+    { id: '3565634353453', name: 'Example 2: Reddit', username: 'wonderboom', password: 'BddhaXJK' },
+    { id: '3565634353453', name: 'Example 3: Discover', username: '', password: '8323 1340 3923 2203, EXP: 11/23, CVV: 622' }
   ],
 };
 
@@ -67,7 +68,7 @@ const updateUi = filterText => {
   const headerUsernameUi = document.createElement('th');
   headerUsernameUi.textContent = 'Username';
   const headerPasswordUi = document.createElement('th');
-  headerPasswordUi.textContent = 'Password';
+  headerPasswordUi.textContent = 'Secret';
   const headerDeleteUi = document.createElement('th');
   headerUi.appendChild(headerAccountUi);
   headerUi.appendChild(headerUsernameUi);
