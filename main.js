@@ -313,22 +313,27 @@ if (localStorage.getItem(DARK_THEME_LOCAL_STORAGE_KEY) === 'true') {
 }
 
 const importPasswordModalCloseButton = document.getElementById("import-password-modal-close");
-
 importPasswordModalCloseButton.onclick = function () {
   importPasswordModal.style.display = "none";
+  importPasswordInput.value = '';
 }
 
 const saveModalCloseButton = document.getElementById("save-modal-close");
 saveModalCloseButton.onclick = () => {
   saveModal.style.display = 'none';
+  exportPasswordInput.value = '';
+  confirmExportPasswordInput.value = '';
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == importPasswordModal) {
     importPasswordModal.style.display = "none";
+    importPasswordInput.value = '';
   }
   if (event.target == saveModal) {
     saveModal.style.display = "none";
+    exportPasswordInput.value = '';
+    confirmExportPasswordInput.value = '';
   }
 }
